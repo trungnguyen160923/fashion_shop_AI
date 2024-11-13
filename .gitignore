@@ -13,6 +13,9 @@
 
 # Created by https://www.gitignore.io/api/git,java,maven,eclipse,windows
 
+### custom ###
+python/config.py
+
 ### Eclipse ###
 
 .metadata
