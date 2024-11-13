@@ -212,7 +212,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         # load model
         with open(current_directory+"/model.pkl", "rb") as f:
             kmeans = pickle.load(f)
-        cluster_id = kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5], X[6]], ])[0]
+        cluster_id = kmeans.predict([X.iloc[:7].tolist()])[0]
         return {"code": 200, "cluster": int(cluster_id)}
 
     except Exception as e:
