@@ -122,7 +122,6 @@ public class AdminController {
 //		
 //		return "admin/adminViewProd";
 //	}
-	// Endpoint kiểm tra Product ID tồn tại
 	@RequestMapping(value = "/checkProductIdExists", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> checkProductIdExists(@RequestBody Map<String, String> payload) {
@@ -133,6 +132,7 @@ public class AdminController {
 	    response.put("exists", exists);
 	    return response;
 	}
+
 
 	// ADD product
 	@RequestMapping(value="adminAddProd", method=RequestMethod.GET)
@@ -154,6 +154,20 @@ public class AdminController {
 	                               @RequestParam("productType") String productType,
 	                               @RequestParam("material") String material) throws IOException {
 	    
+	    // Kiểm tra nếu Product ID đã tồn tại
+	    try {
+	        if (productDAL.checkProductIdExists(id)) {
+	            model.addAttribute("errorMessage", "Product ID already exists.");
+	            model.addAttribute("listCats", productDAL.getLCat());
+	            return "admin/adminAddProd"; // Trả về trang với thông báo lỗi
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();  // In chi tiết lỗi ra console
+	        model.addAttribute("errorMessage", "Error checking Product ID: " + e.getMessage());
+	        model.addAttribute("listCats", productDAL.getLCat());
+	        return "admin/adminAddProd";  // Trả về trang với thông báo lỗi
+	    }
+
 	    Product prod = new Product();
 	    prod.setIdProduct(id);
 	    prod.setProductCategory(productDAL.getCat(Integer.parseInt(cat)));
@@ -166,10 +180,13 @@ public class AdminController {
 	    prod.setProductType(productType);
 	    prod.setMaterial(material);
 
+	    // Lưu sản phẩm mới
 	    if (!productDAL.saveProduct(prod)) {
+	        model.addAttribute("listCats", productDAL.getLCat());
 	        return "admin/adminAddProd";
 	    }
 
+	    // Gọi API sau khi thêm sản phẩm thành công
 	    String url = "http://localhost:8000/cluster";
 	    OkHttpClient client = new OkHttpClient();
 	    Request request = new Request.Builder().url(url).build();

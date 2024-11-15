@@ -98,7 +98,6 @@
 									ID cannot be empty.</span>
 							</div>
 
-
 							<div class="col-6 field name">
 								<label for="cat">Category:</label>
 								<div class="product-form">
@@ -261,10 +260,13 @@
 		    const productId = this.value;
 		    const idError = document.getElementById('idError');
 
-		    // Kiểm tra nếu ID trống
+		    // Kiểm tra nếu ID trống hoặc không phải là chữ số
 		    if (productId === '') {
 		        idError.style.display = 'inline';
 		        idError.textContent = 'Product ID cannot be empty.';
+		    } else if (!/^\d+$/.test(productId)) {  // Kiểm tra nếu ID không phải là chữ số
+		        idError.style.display = 'inline';
+		        idError.textContent = 'Product ID must be numeric.';
 		    } else {
 		        // Gửi yêu cầu AJAX để kiểm tra Product ID tồn tại hay không
 		        checkProductIdExists(productId);
@@ -274,7 +276,7 @@
 		function checkProductIdExists(productId) {
 		    const idError = document.getElementById('idError');
 
-		    // Gửi yêu cầu AJAX đến controller để kiểm tra Product ID
+		    // Gửi yêu cầu AJAX tới controller để kiểm tra Product ID
 		    fetch('/checkProductIdExists', {
 		        method: 'POST',
 		        headers: {
@@ -284,18 +286,14 @@
 		    })
 		    .then(response => response.json())
 		    .then(data => {
+		        // Kiểm tra kết quả từ server
 		        if (data.exists) {
-		            // Nếu product ID đã tồn tại, hiển thị lỗi
 		            idError.style.display = 'inline';
 		            idError.textContent = 'Product ID already exists.';
 		        } else {
-		            // Nếu không tồn tại, ẩn thông báo lỗi
-		            idError.style.display = 'none';
+		            idError.style.display = 'none';  // Ẩn thông báo lỗi nếu Product ID không tồn tại
 		        }
 		    })
-		    .catch(error => {
-		        console.error('Error:', error);
-		    });
 		}
 
 		function validateForm() {

@@ -64,19 +64,18 @@ public class productDAO {
 		return listProd;
 	} 
 	public boolean checkProductIdExists(String productId) {
-	    Session session = factory.getCurrentSession();
-	    try {
-	        String hql = "FROM Product p WHERE p.idProduct = :productId";  // Truy vấn HQL tìm sản phẩm có productId
-	        Query query = session.createQuery(hql);
-	        query.setParameter("productId", productId);  // Thiết lập tham số cho productId
-	        Product product = (Product) query.uniqueResult();  // Trả về sản phẩm duy nhất (hoặc null nếu không có)
-	        
-	        return product != null;  // Nếu sản phẩm không null, tức là tồn tại
-	    } catch (Exception e) {
-	        e.printStackTrace();  // Xử lý lỗi nếu có
-	        return false;  // Nếu có lỗi hoặc không tìm thấy, trả về false
-	    }
-	}
+        Session session = factory.getCurrentSession();
+        try {
+            String hql = "FROM Product p WHERE p.idProduct = :productId";
+            Query query = session.createQuery(hql);
+            query.setParameter("productId", productId);
+            Product product = (Product) query.uniqueResult();
+            return product != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 	public List<Product> getProductsByCluster(String id, String sessionId) throws IOException, InterruptedException {
