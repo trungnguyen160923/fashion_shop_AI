@@ -63,7 +63,21 @@ public class productDAO {
 		List<Product> listProd = query.list();
 		return listProd;
 	} 
-	
+	public boolean checkProductIdExists(String productId) {
+        Session session = factory.getCurrentSession();
+        try {
+            String hql = "FROM Product p WHERE p.idProduct = :productId";
+            Query query = session.createQuery(hql);
+            query.setParameter("productId", productId);
+            Product product = (Product) query.uniqueResult();
+            return product != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 	public List<Product> getProductsByCluster(String id, String sessionId) throws IOException, InterruptedException {
 		String url = "http://localhost:8000/get-history-cluster/"+sessionId;
 		OkHttpClient client = new OkHttpClient();
@@ -162,23 +176,25 @@ public class productDAO {
 		return list;
 	}
 	
-	public boolean saveProduct( Product prod) {
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
-		
-		try {
-			session.save(prod);
-			t.commit();
-		} catch(Exception e) {
-			t.rollback();
-			System.out.println("Insert product Failed");
-			return false;
-		} finally {
-			session.close();
-		}
-		System.out.println("Insert product Success!");
-		return true;
+	public boolean saveProduct(Product prod) {
+	    Session session = factory.openSession();
+	    Transaction t = session.beginTransaction();
+	    
+	    try {
+	        session.save(prod);
+	        t.commit();
+	        System.out.println("Insert product Success!");
+	        return true;
+	    } catch(Exception e) {
+	        t.rollback();
+	        System.out.println("Insert product Failed: " + e.getMessage());
+	        e.printStackTrace();  // In chi tiết lỗi
+	        return false;
+	    } finally {
+	        session.close();
+	    }
 	}
+
 	
 	public boolean updateProduct( String prodID,
 			String cat,

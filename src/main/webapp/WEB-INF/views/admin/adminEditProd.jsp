@@ -75,11 +75,11 @@
                 <h2>Manage Products</h2>
 
                 <div class="map">
-                    <a href="home.html">Home</a>
+                    <a href="admin/home.htm">Home</a>
                     /
-                    <a href="adminHome.html">Admin</a>
+                    <a href="admin/adminHome.htm">Admin</a>
                     /
-                    <a href="adminProduct.html">Edit Product</a>
+                    <a href="admin/adminProduct.htm">Edit Product</a>
                 </div>
             </div>
 
