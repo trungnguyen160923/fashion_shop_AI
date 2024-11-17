@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import fashion_shop.entity.Product;
 import fashion_shop.entity.ProductCategory;
@@ -41,6 +42,7 @@ import okhttp3.Response;
 public class productDAO {
 	@Autowired
 	SessionFactory factory;
+	
 	
 	//Get List Product includes Size, Color and Quantity 
 	//( mix between 2 Entity: Product & SizeAndColor)
@@ -63,66 +65,158 @@ public class productDAO {
 		List<Product> listProd = query.list();
 		return listProd;
 	} 
-	public boolean checkProductIdExists(String productId) {
-        Session session = factory.getCurrentSession();
-        try {
-            String hql = "FROM Product p WHERE p.idProduct = :productId";
-            Query query = session.createQuery(hql);
-            query.setParameter("productId", productId);
-            Product product = (Product) query.uniqueResult();
-            return product != null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-	public List<Product> getProductsByCluster(String id, String sessionId) throws IOException, InterruptedException {
-		String url = "http://localhost:8000/get-history-cluster/"+sessionId;
-		OkHttpClient client = new OkHttpClient();
-		  Request request = new Request.Builder()
-		      .url(url)
-		      .build();
 	
-		  Response response = client.newCall(request).execute();
-		  Gson gson = new Gson();
-		  APIResult result = gson.fromJson(response.body().string(), APIResult.class);
-		  System.out.println(result.toString());
-		
-		Session session = factory.getCurrentSession();
-		Product currentProduct = (Product) session.get(Product.class, id);
-		String hql = String.format("from Product where id != %s and productCluster = %d and ProdCategory.idCategory = %d", 
-				currentProduct.getIdProduct(), 
-				result.getCluster(),
-				currentProduct.getProductCategory().getIdCategory());
-		Query query = session.createQuery(hql);
-		List<Product> listProd = query.list();
-		listProd.sort(new Comparator<Product>() {
+	public List<Product> getProductsByCluster(String id, String sessionId) throws IOException, InterruptedException {
+	    String url = "http://localhost:8000/get-history-cluster/" + sessionId;
+	    OkHttpClient client = new OkHttpClient();
+	    Request request = new Request.Builder()
+	            .url(url)
+	            .build();
 
-			@Override
-			public int compare(Product o1, Product o2) {
-				Double avgRating1 = 0.0;
-				if (o1.getRatings().size() != 0) {
-					for (Rating rating : o1.getRatings()) {
-						avgRating1 += rating.getRating();
-					}
-					avgRating1 /= o1.getRatings().size();
-				}
-				Double avgRating2 = 0.0;
-				if (o2.getRatings().size() != 0) {
-					for (Rating rating : o2.getRatings()) {
-						avgRating2 += rating.getRating();
-					}
-					avgRating2 /= o2.getRatings().size();
-				}
-				return avgRating1.compareTo(avgRating2);
-			}
-		});
-		return listProd;
+	    // Gửi request và nhận phản hồi
+	    Response response = client.newCall(request).execute();
+
+	    // Kiểm tra mã trạng thái HTTP của phản hồi
+	    if (response.code() == 404) {
+	        // API trả về mã 404 (không tìm thấy tài nguyên)
+	        System.out.println("API returned 404 for URL: " + url);
+	        return new ArrayList<>();  // Trả về danh sách rỗng nếu không tìm thấy dữ liệu
+	    }
+
+	    // Kiểm tra các mã lỗi khác (500, 400, v.v.) và xử lý tương ứng
+	    if (!response.isSuccessful()) {
+	        throw new IOException("Unexpected response code: " + response.code() + " - " + response.message() + " for URL: " + url);
+	    }
+
+	    // Đọc dữ liệu JSON từ phản hồi
+	    String responseBody = response.body().string();
+
+	    // Kiểm tra xem dữ liệu JSON có hợp lệ không
+	    if (responseBody == null || responseBody.isEmpty()) {
+	        throw new IOException("Empty response body from API");
+	    }
+
+	    // Phân tích JSON với Gson
+	    APIResult result = null;
+	    try {
+	        Gson gson = new Gson();
+	        result = gson.fromJson(responseBody, APIResult.class);
+	    } catch (JsonSyntaxException e) {
+	        throw new IOException("Invalid JSON response: " + responseBody, e);
+	    }
+
+	    // Kiểm tra kết quả từ API
+	    if (result == null) {
+	        throw new IOException("API response does not contain valid data");
+	    }
+	    System.out.println(result.toString());
+
+	    // Tiếp tục với xử lý dữ liệu trong cơ sở dữ liệu
+	    Session session = factory.getCurrentSession();
+	    Product currentProduct = (Product) session.get(Product.class, id);
+	    String hql = String.format("from Product where id != %s and productCluster = %d and ProdCategory.idCategory = %d",
+	            currentProduct.getIdProduct(),
+	            result.getCluster(),
+	            currentProduct.getProductCategory().getIdCategory());
+	    Query query = session.createQuery(hql);
+	    List<Product> listProd = query.list();
+
+	    // Sắp xếp các sản phẩm theo điểm đánh giá trung bình
+	    listProd.sort(new Comparator<Product>() {
+	        @Override
+	        public int compare(Product o1, Product o2) {
+	            Double avgRating1 = 0.0;
+	            if (o1.getRatings().size() != 0) {
+	                for (Rating rating : o1.getRatings()) {
+	                    avgRating1 += rating.getRating();
+	                }
+	                avgRating1 /= o1.getRatings().size();
+	            }
+
+	            Double avgRating2 = 0.0;
+	            if (o2.getRatings().size() != 0) {
+	                for (Rating rating : o2.getRatings()) {
+	                    avgRating2 += rating.getRating();
+	                }
+	                avgRating2 /= o2.getRatings().size();
+	            }
+	            return avgRating1.compareTo(avgRating2);
+	        }
+	    });
+
+	    return listProd;
+	}
+
+	public List<Product> searchProducts(String keyword) {
+	    // Mở phiên làm việc Hibernate
+	    Session session = factory.getCurrentSession();
+	    
+	    // Sử dụng HQL để tìm kiếm sản phẩm theo tên. Chú ý sử dụng LIKE để tìm kiếm theo mẫu
+	    String hql = "FROM Product P WHERE P.name LIKE :keyword";
+	    
+	    // Tạo truy vấn và thiết lập tham số "keyword"
+	    Query query = session.createQuery(hql);
+	    
+	    query.setParameter("keyword", "%" + keyword + "%");  // Tìm kiếm với phần từ khóa (tức là tìm tất cả các sản phẩm có tên chứa "keyword")
+	    
+	    // Thực hiện truy vấn và trả về danh sách sản phẩm
+	    List<Product> productList = query.list();
+	    
+	    return productList;
 	}
 	
-	
+	public List<Product> filterProducts(List<String> priceRanges) {
+	    Session session = factory.getCurrentSession();
+	    
+	    // Xây dựng câu lệnh HQL cơ bản
+	    String hql = "FROM Product P WHERE 1=1";  // Câu lệnh cơ bản không có điều kiện
+	    
+	    // Sử dụng StringBuilder để xây dựng câu lệnh HQL linh động
+	    StringBuilder hqlBuilder = new StringBuilder(hql);
+	    
+	    // Thêm điều kiện lọc theo giá nếu có các khoảng giá được chọn
+	    if (priceRanges != null && !priceRanges.isEmpty()) {
+	        hqlBuilder.append(" AND (");
+	        
+	        // Lặp qua tất cả các khoảng giá được chọn và thêm điều kiện vào HQL
+	        for (int i = 0; i < priceRanges.size(); i++) {
+	            String range = priceRanges.get(i);
+	            String[] prices = range.split("-");
+	            Double minPrice = Double.parseDouble(prices[0]);
+	            Double maxPrice = Double.parseDouble(prices[1]);
+	            
+	            // Thêm điều kiện cho mỗi khoảng giá
+	            if (i > 0) {
+	                hqlBuilder.append(" OR ");
+	            }
+	            hqlBuilder.append("P.price >= :minPrice" + i + " AND P.price <= :maxPrice" + i);
+	        }
+	        
+	        hqlBuilder.append(")");
+	    }
+	    
+	    // Tạo truy vấn từ câu lệnh HQL đã xây dựng
+	    Query query = session.createQuery(hqlBuilder.toString());
+	    
+	    // Thiết lập các tham số cho các khoảng giá
+	    if (priceRanges != null && !priceRanges.isEmpty()) {
+	        for (int i = 0; i < priceRanges.size(); i++) {
+	            String range = priceRanges.get(i);
+	            String[] prices = range.split("-");
+	            Double minPrice = Double.parseDouble(prices[0]);
+	            Double maxPrice = Double.parseDouble(prices[1]);
+	            query.setParameter("minPrice" + i, minPrice);
+	            query.setParameter("maxPrice" + i, maxPrice);
+	        }
+	    }
+	    
+	    // Thực hiện truy vấn và trả về danh sách các sản phẩm thỏa mãn các điều kiện lọc
+	    List<Product> filteredProducts = query.list();
+	    
+	    return filteredProducts;
+	}
+
+
 	
 	public List<ProductCategory> getLCat() {
 		Session session = factory.getCurrentSession();
@@ -176,25 +270,23 @@ public class productDAO {
 		return list;
 	}
 	
-	public boolean saveProduct(Product prod) {
-	    Session session = factory.openSession();
-	    Transaction t = session.beginTransaction();
-	    
-	    try {
-	        session.save(prod);
-	        t.commit();
-	        System.out.println("Insert product Success!");
-	        return true;
-	    } catch(Exception e) {
-	        t.rollback();
-	        System.out.println("Insert product Failed: " + e.getMessage());
-	        e.printStackTrace();  // In chi tiết lỗi
-	        return false;
-	    } finally {
-	        session.close();
-	    }
+	public boolean saveProduct( Product prod) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		
+		try {
+			session.save(prod);
+			t.commit();
+		} catch(Exception e) {
+			t.rollback();
+			System.out.println("Insert product Failed");
+			return false;
+		} finally {
+			session.close();
+		}
+		System.out.println("Insert product Success!");
+		return true;
 	}
-
 	
 	public boolean updateProduct( String prodID,
 			String cat,

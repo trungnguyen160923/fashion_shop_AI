@@ -60,7 +60,9 @@
 
 		</ul>
 
-		<button class="btn-log-out"><a href="user/logout.htm">Log out</a></button>
+		<button class="btn-log-out">
+			<a href="user/logout.htm">Log out</a>
+		</button>
 	</aside>
 
 	<!-- Main -->
@@ -99,22 +101,25 @@
 					</tr>
 
 					<div class="scroll">
-						
-						
-    					
-    					<c:forEach var="p" items="${listProducts }" begin="0" end="${size }">
-    	 
-    							<tr>
-		                            <td>${p.idProduct }</td>
-		                            <td><img style="width: 120px; margin: 0 auto;" src="${p.image }"  ></td>
-		                            <td>${p.getProductCategory().nameCategory }</td>
-		                            <td>${p.name }</td>
-		                            <td>$${p.price }</td>
-		                            <td><a href="admin/adminProd/${p.idProduct }.htm" style="color:#333;" class="icon"><i
-									class="fa-solid fa-circle-info"></i></a></td>
-							
-		                        </tr> 
-    					</c:forEach>
+
+
+
+						<c:forEach var="p" items="${listProducts }" begin="0"
+							end="${size }">
+
+							<tr>
+								<td>${p.idProduct }</td>
+								<td><img style="width: 120px; margin: 0 auto;"
+									src="${p.image }"></td>
+								<td>${p.getProductCategory().nameCategory }</td>
+								<td>${p.name }</td>
+								<td>$${p.price }</td>
+								<td><a href="admin/adminProd/${p.idProduct }.htm"
+									style="color: #333;" class="icon"><i
+										class="fa-solid fa-circle-info"></i></a></td>
+
+							</tr>
+						</c:forEach>
 					</div>
 
 				</table>

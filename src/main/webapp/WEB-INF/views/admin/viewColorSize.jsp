@@ -60,7 +60,9 @@
 
 		</ul>
 
-		<button class="btn-log-out"><a href="user/logout.htm">Log out</a></button>
+		<button class="btn-log-out">
+			<a href="user/logout.htm">Log out</a>
+		</button>
 	</aside>
 
 	<!-- Main -->
@@ -77,7 +79,7 @@
 				</div>
 			</div>
 
-			
+
 		</div>
 
 
@@ -85,76 +87,85 @@
 		<!-- Main talbe data  -->
 		<div class="main-content">
 			<table>
+				<tr>
+					<th>ID</th>
+					<th>Brand</th>
+					<th>Gender</th>
+					<th>Release time</th>
+					<th>Type</th>
+					<th>Material</th>
+				</tr>
+
+				<div class="scroll">
+
+
+
 					<tr>
-						<th>ID</th>
-						<th>Brand</th>
-						<th>Gender</th>
-						<th>Release time</th>
-						<th>Type</th>
-						<th>Material</th>
+						<td>${p.idProduct }</td>
+						<td>${p.brand }</td>
+						<c:if test="${not empty p.gender }">
+							<c:if test="${p.gender }">
+								<td>Male</td>
+							</c:if>
+							<c:if test="${!p.gender }">
+								<td>Female</td>
+							</c:if>
+						</c:if>
+						<c:if test="${empty p.gender }">
+							<td>None</td>
+						</c:if>
+						<td>${p.releaseTime }</td>
+						<td>${p.productType }</td>
+						<td>${p.material }</td>
 					</tr>
 
-					<div class="scroll">
-						
-						
-    	 
-    							<tr>
-		                            <td>${p.idProduct }</td>
-		                            <td>${p.brand }</td>
-		                            <c:if test="${not empty p.gender }">
-		                            	<c:if test="${p.gender }"><td>Male</td></c:if>
-		                            	<c:if test="${!p.gender }"><td>Female</td></c:if>
-		                            </c:if>
-		                         	<c:if test="${empty p.gender }"><td>None</td></c:if>
-		                            <td>${p.releaseTime }</td>
-		                            <td>${p.productType }</td>
-		                            <td>${p.material }</td>
-		                        </tr> 
-    					
-					</div>
+				</div>
 
-				</table>
-		
-		
+			</table>
+
+
 			<div class="table-container">
-				
-				
-				
+
+
+
 				<table>
 					<tr>
 						<th>Color</th>
 						<th>Size</th>
 						<th>Quantity</th>
 						<th>Edit</th>
-                        <th>Delete</th>
+						<th>Delete</th>
 					</tr>
 
 					<div class="scroll">
 						<c:forEach var="c" items="${listC}" begin="0" end="${size }">
-    	 					<tr>
+							<tr>
 								<td>${c.pk.color }</td>
 								<td>${c.pk.size }</td>
 								<td>${c.quantity }</td>
-								<td>
-                                <a href="admin/editCS/${p.idProduct }_${c.pk.color}_${c.pk.size}.htm" class="btn-func" style="background-color: #1abc9c;"><i class="fa-solid fa-pen"></i></a>
+								<td><a
+									href="admin/editCS/${p.idProduct }_${c.pk.color}_${c.pk.size}.htm"
+									class="btn-func" style="background-color: #1abc9c;"><i
+										class="fa-solid fa-pen"></i></a></td>
+								<td><a
+									href="admin/deleteCS/${p.idProduct }_${c.pk.color}_${c.pk.size}.htm"
+									class="btn-func" style="background-color: #c0392b;"><i
+										class="fa-solid fa-trash-can"></i></a></td>
+							</tr>
+						</c:forEach>
 
-                            </td>
-                            <td>
-                                <a href="admin/deleteCS/${p.idProduct }_${c.pk.color}_${c.pk.size}.htm" class="btn-func" style="background-color: #c0392b;"><i class="fa-solid fa-trash-can"></i></a>
-                            </td>
-							</tr> 
-    					</c:forEach>
-    					
 					</div>
 
 				</table>
 			</div>
-			
-			<a href="admin/deleteProduct/${p.idProduct }.htm" class="btn" style="left: 320px; right: unset; background-color: #c0392b;">DELETE THIS PRODUCT</a>
-            
-            <a href="admin/adminProducts.htm" class="btn" style="right: 320px; background-color: #efefef; color: #666;">Back</a>
-            <a href="admin/editProd/${p.idProduct}.htm" class="btn" style="right: 180px;">Edit</a>
-            <a href="admin/addCS/${p.idProduct }.htm" class="btn">Add</a>
+
+			<a href="admin/deleteProduct/${p.idProduct }.htm" class="btn"
+				style="left: 320px; right: unset; background-color: #c0392b;">DELETE
+				THIS PRODUCT</a> <a href="admin/adminProducts.htm" class="btn"
+				style="right: 320px; background-color: #efefef; color: #666;">Back</a>
+			<a href="admin/editProd/${p.idProduct}.htm" class="btn"
+				style="right: 180px;">Edit</a> <a
+				href="admin/addCS/${p.idProduct }.htm" class="btn">Add</a>
 		</div>
 	</main>
 

@@ -56,11 +56,6 @@ import fashion_shop.DAO.accountDAO;
 import fashion_shop.DAO.adminDAO;
 import fashion_shop.DAO.productDAO;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.Map;
-import java.util.HashMap;
-
 @Transactional
 @Controller
 //@SessionAttributes(value = { "cus", "newAdmin", "p" })
@@ -122,18 +117,7 @@ public class AdminController {
 //		
 //		return "admin/adminViewProd";
 //	}
-	@RequestMapping(value = "/checkProductIdExists", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Boolean> checkProductIdExists(@RequestBody Map<String, String> payload) {
-	    String productId = payload.get("productId");
-	    boolean exists = productDAL.checkProductIdExists(productId);
-	    
-	    Map<String, Boolean> response = new HashMap<>();
-	    response.put("exists", exists);
-	    return response;
-	}
-
-
+	
 	// ADD product
 	@RequestMapping(value="adminAddProd", method=RequestMethod.GET)
 	public String viewAdminAddProd( ModelMap model) {
@@ -142,62 +126,50 @@ public class AdminController {
 	}
 	// ADD product
 	@RequestMapping(value="adminAddProd", method=RequestMethod.POST)
-	public String viewAdminAddProd(ModelMap model,
-	                               @RequestParam("id") String id,
-	                               @RequestParam("cat") String cat,
-	                               @RequestParam("name") String name,
-	                               @RequestParam("price") Float price, 
-	                               @RequestParam("image") String image,
-	                               @RequestParam("brand") String brand,
-	                               @RequestParam("gender") int gender,
-	                               @RequestParam("releaseTime") Integer releaseTime,
-	                               @RequestParam("productType") String productType,
-	                               @RequestParam("material") String material) throws IOException {
-	    
-	    // Kiểm tra nếu Product ID đã tồn tại
-	    try {
-	        if (productDAL.checkProductIdExists(id)) {
-	            model.addAttribute("errorMessage", "Product ID already exists.");
-	            model.addAttribute("listCats", productDAL.getLCat());
-	            return "admin/adminAddProd"; // Trả về trang với thông báo lỗi
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();  // In chi tiết lỗi ra console
-	        model.addAttribute("errorMessage", "Error checking Product ID: " + e.getMessage());
-	        model.addAttribute("listCats", productDAL.getLCat());
-	        return "admin/adminAddProd";  // Trả về trang với thông báo lỗi
-	    }
+	public String viewAdminAddProd( ModelMap model,
+			@RequestParam("ID") String id,
+			@RequestParam("cat") String cat,
+			@RequestParam("name") String name,
+			@RequestParam("price") Float price, 
+			@RequestParam("image") String image,
+			@RequestParam("brand") String brand,
+			@RequestParam("gender") int gender,
+			@RequestParam("releaseTime") Integer releaseTime,
+			@RequestParam("productType") String productType,
+			@RequestParam("material") String material) throws IOException {
+		
+		Product prod = new Product();
+		prod.setIdProduct(id);
+		prod.setProductCategory(productDAL.getCat(Integer.parseInt(cat)));
+		prod.setName(name);
+		prod.setPrice(price);
+		prod.setImage(image);
+		prod.setBrand(brand);
+		prod.setGender(gender == -1 ? null : gender == 1 ? true : false);
+		prod.setReleaseTime(releaseTime);
+		prod.setProductType(productType);
+		prod.setMaterial(material);
+		
+		model.addAttribute("listCats", productDAL.getLCat());
+		
+		if(!productDAL.saveProduct(prod)) {
+			return "admin/adminAddProd";
+		}
+		
+		String url = "http://localhost:8000/cluster";
+		OkHttpClient client = new OkHttpClient();
+	  Request request = new Request.Builder()
+	      .url(url)
+	      .build();
 
-	    Product prod = new Product();
-	    prod.setIdProduct(id);
-	    prod.setProductCategory(productDAL.getCat(Integer.parseInt(cat)));
-	    prod.setName(name);
-	    prod.setPrice(price);
-	    prod.setImage(image);
-	    prod.setBrand(brand);
-	    prod.setGender(gender == -1 ? null : gender == 1 ? true : false);
-	    prod.setReleaseTime(releaseTime);
-	    prod.setProductType(productType);
-	    prod.setMaterial(material);
-
-	    // Lưu sản phẩm mới
-	    if (!productDAL.saveProduct(prod)) {
-	        model.addAttribute("listCats", productDAL.getLCat());
-	        return "admin/adminAddProd";
-	    }
-
-	    // Gọi API sau khi thêm sản phẩm thành công
-	    String url = "http://localhost:8000/cluster";
-	    OkHttpClient client = new OkHttpClient();
-	    Request request = new Request.Builder().url(url).build();
-	    Response response = client.newCall(request).execute();
-	    Gson gson = new Gson();
-	    APIResult2 result = gson.fromJson(response.body().string(), APIResult2.class);
-	    System.out.println(result.toString());
-
-	    return "redirect:/admin/adminProducts.htm";
+	  Response response = client.newCall(request).execute();
+	  Gson gson = new Gson();
+	  APIResult2 result = gson.fromJson(response.body().string(), APIResult2.class);
+	  System.out.println(result.toString());
+		
+		return "redirect:/admin/adminProducts.htm";
 	}
-
+	
 	
 	//DELETE PRoduct
 	@RequestMapping(value="deleteProduct/{id}", method=RequestMethod.GET)

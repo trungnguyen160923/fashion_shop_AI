@@ -31,11 +31,11 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
-	
-	
+
+
 	<!-- Main -->
 	<main class="main">
-      
+
 		<!-- Slider -->
 		<section class="slider">
 			<div class="container">
@@ -76,8 +76,9 @@
 									style="color: #222; font-size: 40px; line-height: 36px; margin-bottom: 30px; letter-spacing: -1.12px;">
 									Fashionable<br>partner
 								</h2>
-								<a class="black" style="color: #222;" href="home/products.htm">SHOP NOW <i
-									class="fa-solid fa-arrow-right"></i></a>
+								<a class="black" style="color: #222;" href="home/products.htm">SHOP
+									NOW <i class="fa-solid fa-arrow-right"></i>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -192,15 +193,13 @@
 					<c:forEach var="p" items="${prods}" begin="10" end="15" step="1">
 						<div class="col-4 product">
 							<div class="product-image">
-								<img
-									src="${p.image }"
-									alt="">
+								<img src="${p.image }" alt="">
 
 								<div class="new">NEW</div>
 
-								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a> <a
-									href="cart/cart/{idProduct}.htm" class="btn-add"> <i
-									class="fa-solid fa-bag-shopping"></i>
+								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW
+									DETAILS</a> <a href="cart/cart/{idProduct}.htm" class="btn-add">
+									<i class="fa-solid fa-bag-shopping"></i>
 								</a>
 							</div>
 
@@ -209,7 +208,8 @@
 									class="product-category hover-p-color">${p.getProductCategory().nameCategory }</a>
 
 								<h2>
-									<a href="home/detail/${p.idProduct}.htm" class="product-name hover-p-color">${p.name }</a>
+									<a href="home/detail/${p.idProduct}.htm"
+										class="product-name hover-p-color">${p.name }</a>
 								</h2>
 
 								<p class="product-price">$${p.price }</p>
@@ -296,14 +296,12 @@
 					<c:forEach var="p" items="${prods}" begin="5" end="10" step="1">
 						<div class="col-4 product">
 							<div class="product-image">
-								<img
-									src="${p.image }"
-									alt="">
+								<img src="${p.image }" alt="">
 
 								<div class="new">NEW</div>
 
-								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a> <a
-									href="" class="btn-add"> <i
+								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW
+									DETAILS</a> <a href="" class="btn-add"> <i
 									class="fa-solid fa-bag-shopping"></i>
 								</a>
 							</div>
@@ -312,7 +310,8 @@
 								<a href="" class="product-category hover-p-color">${p.getProductCategory().nameCategory }</a>
 
 								<h2>
-									<a href="home/detail/${p.idProduct}.htm" class="product-name hover-p-color">${p.name }</a>
+									<a href="home/detail/${p.idProduct}.htm"
+										class="product-name hover-p-color">${p.name }</a>
 								</h2>
 
 								<p class="product-price">${p.price }</p>

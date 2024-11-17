@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -14,11 +14,13 @@
 <title>Riode - Forgot Password</title>
 <base href="${pageContext.servletContext.contextPath}/">
 
-<link href="<c:url value='/resources/home/dist/css/reset.css' />" rel="stylesheet">
-<link href="<c:url value='/resources/home/dist/css/login.css' />" rel="stylesheet">
+<link href="<c:url value='/resources/home/dist/css/reset.css' />"
+	rel="stylesheet">
+<link href="<c:url value='/resources/home/dist/css/login.css' />"
+	rel="stylesheet">
 
 <link rel="icon" type="image/png"
-	href="https://d-themes.com/html/riode/images/icons/favicon.png"/>
+	href="https://d-themes.com/html/riode/images/icons/favicon.png" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
 	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -86,13 +88,14 @@
 	<main class="main login-container">
 		<div class="container">
 
-			<form:form class="login-form" action="user/forgotpassword.htm" modelAttribute="user">
+			<form:form class="login-form" action="user/forgotpassword.htm"
+				modelAttribute="user">
 				<h2>Find your password</h2>
 
 				<p>Please enter your username to get OTP from email</p>
 				<form:input type="text" path="user_name" placeholder="Username"></form:input>
-<%-- 				<span class="errors">Can't find your username</span> --%>
-				<span class="errors"><form:errors path="user_name"/>${message }</span>
+				<%-- 				<span class="errors">Can't find your username</span> --%>
+				<span class="errors"><form:errors path="user_name" />${message }</span>
 				<button>Send</button>
 			</form:form>
 		</div>

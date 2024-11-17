@@ -141,21 +141,15 @@ public class UserController {
 
 		Role r = (Role) session.get(Role.class, 2);
 		user.setrole(r);
-
-		try {
-			if (errors.hasErrors()) {
-				model.addAttribute("messageRegister", "Đăng ký thất bại");
-			} else {
-				session.save(user);
-				t.commit();
-				model.addAttribute("messageRegister", "Đăng ký thành công!");
-			}
-		} catch (Exception e) {
-			t.rollback();
-			model.addAttribute("messageRegister", "Đăng ký thất bại!");
-		} finally {
-			session.close();
-		}
+		System.out.println("///////////////");
+		System.out.println(user);
+		/*
+		 * try { if (errors.hasErrors()) { model.addAttribute("messageRegister",
+		 * "Đăng ký thất bại"); } else { session.save(user); t.commit();
+		 * model.addAttribute("messageRegister", "Đăng ký thành công!"); } } catch
+		 * (Exception e) { t.rollback(); model.addAttribute("messageRegister",
+		 * "Đăng ký thất bại!"); } finally { session.close(); }
+		 */
 		return "user/register";
 	}
 

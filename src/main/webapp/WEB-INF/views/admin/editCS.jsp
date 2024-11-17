@@ -60,7 +60,9 @@
 
 		</ul>
 
-		<button class="btn-log-out"><a href="user/logout.htm">Log out</a></button>
+		<button class="btn-log-out">
+			<a href="user/logout.htm">Log out</a>
+		</button>
 	</aside>
 
 	<!-- Main -->
@@ -77,7 +79,7 @@
 				</div>
 			</div>
 
-			
+
 		</div>
 
 
@@ -94,42 +96,45 @@
 				</tr>
 
 				<tr>
-		        	<td>${p.idProduct }</td>
-		           	<td><img style="width: 120px; margin: 0 auto;" src="${p.image }"  ></td>
-		            <td>${p.getProductCategory().nameCategory }</td>
-		            <td>${p.name }</td>
-		            <td>$${p.price }</td>
-		        </tr> 
-    		</table>
-		
-		
+					<td>${p.idProduct }</td>
+					<td><img style="width: 120px; margin: 0 auto;"
+						src="${p.image }"></td>
+					<td>${p.getProductCategory().nameCategory }</td>
+					<td>${p.name }</td>
+					<td>$${p.price }</td>
+				</tr>
+			</table>
+
+
 			<div class="table-container">
 				<form method="post">
-				<table>
-					<tr>
-						<th>Color</th>
-						<th>Size</th>
-						<th>Quantity</th> 
-					</tr>
+					<table>
+						<tr>
+							<th>Color</th>
+							<th>Size</th>
+							<th>Quantity</th>
+						</tr>
 
-						
-    	 			<tr>
-						<td>${c.pk.color }</td>
-						<td>${c.pk.size }</td>
-						<td><input type="number" name="quantity" value="${c.quantity }"> </td>
-								 
-					</tr> 
-    				
-				</table>
-				
-				<a href="admin/adminProd/${p.idProduct }.htm" class="btn" style="right: 180px; background-color: #efefef; color: #666;">Cancel</a>
-				<button class="btn">Save</button>
-				
+
+						<tr>
+							<td>${c.pk.color }</td>
+							<td>${c.pk.size }</td>
+							<td><input type="number" name="quantity"
+								value="${c.quantity }"></td>
+
+						</tr>
+
+					</table>
+
+					<a href="admin/adminProd/${p.idProduct }.htm" class="btn"
+						style="right: 180px; background-color: #efefef; color: #666;">Cancel</a>
+					<button class="btn">Save</button>
+
 				</form>
-		 	
-			
-			 </div>
-            </div>
+
+
+			</div>
+		</div>
 	</main>
 
 

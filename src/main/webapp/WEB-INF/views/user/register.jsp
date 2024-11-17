@@ -27,20 +27,22 @@
 <link
 	href="<c:url value='/resources/home/dist/css/owl.theme.default.css' />"
 	rel="stylesheet">
-	<link rel="icon" type="image/png" href="https://d-themes.com/html/riode/images/icons/favicon.png">
+<link rel="icon" type="image/png"
+	href="https://d-themes.com/html/riode/images/icons/favicon.png">
 </head>
 <body>
 
 	<!-- HEADER -->
 	<%@include file="/WEB-INF/views/header.jsp"%>
-	
-	
-	
+
+
+
 	<!-- MAIN -->
 	<main class="main login-container">
 		<div class="container">
 
-			<form:form class="register-form" action="user/register.htm" modelAttribute="user" enctype="multipart/form-data">
+			<form:form class="register-form" action="user/register.htm"
+				modelAttribute="user" enctype="multipart/form-data">
 				<h2>Register</h2>
 
 				<div class="row">
@@ -57,7 +59,7 @@
 							<form:select path="gender" id="gender">
 								<form:option value="0">Male</form:option>
 								<form:option value="1">Female</form:option>
-<%-- 								<form:option value="other">Other</form:option> --%>
+								<%-- 								<form:option value="other">Other</form:option> --%>
 							</form:select>
 						</div>
 					</div>
@@ -67,7 +69,8 @@
 						<form:errors path="user_name"></form:errors>
 						<form:input type="password" path="password" placeholder="Password"></form:input>
 						<form:errors path="password"></form:errors>
-						<input type="password" name="passwordagain" placeholder="Password again"></input>
+						<input type="password" name="passwordagain"
+							placeholder="Password again"></input>
 						<p>${passwordagain }</p>
 
 						<p>
@@ -77,7 +80,8 @@
 
 					<div class="col-4 ">
 						<div class="input-group">
-							<label for="">Image file upload</label> <input type="file" name="photo">
+							<label for="">Image file upload</label> <input type="file"
+								name="photo">
 
 						</div>
 
@@ -89,7 +93,7 @@
 
 						<form:input type="text" path="address" placeholder="Address"></form:input>
 						<form:errors path="address"></form:errors>
-						
+
 						${messageRegister }
 						<button>REGISTER</button>
 					</div>
@@ -101,7 +105,9 @@
 	</main>
 </body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+	referrerpolicy="no-referrer"></script>
 <script src="<c:url value='/resources/home/dist/js/owl.carousel.js' />"></script>
 <script src="<c:url value='/resources/home/dist/js/home.js' />"></script>
 </html>
