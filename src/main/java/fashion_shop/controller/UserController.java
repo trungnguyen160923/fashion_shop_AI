@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import fashion_shop.entity.Account;
+import fashion_shop.entity.Cart;
 import fashion_shop.entity.Role;
+import fashion_shop.service.DBService;
 import fashion_shop.DAO.accountDAO;
 
 @Transactional
@@ -207,6 +209,11 @@ public class UserController {
 				String fromPage = (String) httpSession.getAttribute("fromPage");
 				// session để lưu user là customer và quay lại home
 				model.addAttribute("session", httpSession.getAttribute("acc"));
+				
+				DBService db = new DBService(factory);	
+				List<Cart> cartItems = db.getCartItemsByUsername(acc.getUser_name());
+				httpSession.setAttribute("carts", cartItems);
+				
 				if (fromPage == "cart") {
 					return "redirect:/cart/checkout.htm";
 				} else {					
@@ -362,7 +369,9 @@ public class UserController {
 	public String logOut(HttpServletRequest req) {
 		HttpSession s = req.getSession();
 		s.removeAttribute("acc");
-		return "redirect:/home/index.htm";
+		s.removeAttribute("fromPage");
+		s.removeAttribute("carts");
+		return "redirect:/user/login.htm";
 	}
 	
 	//Change info

@@ -301,10 +301,13 @@
 
 								<div class="new">NEW</div>
 
-								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a> <a
-									href="" class="btn-add"> <i
+								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a>
+								<form method="post">
+									<a
+									href="cart/add.htm" class="btn-add"> <i
 									class="fa-solid fa-bag-shopping"></i>
-								</a>
+									</a>
+								</form>
 							</div>
 
 							<div class="product-content">

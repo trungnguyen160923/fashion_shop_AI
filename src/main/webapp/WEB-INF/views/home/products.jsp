@@ -131,8 +131,9 @@
 				
 												<div class="new">NEW</div>
 				
-												<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a> <a
-													href="" class="btn-add"> <i
+												<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a>
+												<a
+													href="home/detail/${p.idProduct}.htm" class="btn-add"> <i
 													class="fa-solid fa-bag-shopping"></i>
 												</a>
 											</div>

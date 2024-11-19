@@ -53,7 +53,7 @@
                             ORDER NUMBER:
                         </div>
                         <div class="overview-value">
-                            4935
+                            ${order.id_order}
                         </div>
                     </div>
                     
@@ -64,7 +64,7 @@
                             STATUS:
                         </div>
                         <div class="overview-value">
-                            Processing
+                            Waiting for confirmation
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                             DATE:
                         </div>
                         <div class="overview-value">
-                            November 20, 2020
+                            ${order.order_date}
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@
                             EMAIL:
                         </div>
                         <div class="overview-value">
-                            12345@gmail.com
+                            ${order.cusEmail }
                         </div>
                     </div>
 
@@ -91,7 +91,7 @@
                             TOTAL:
                         </div>
                         <div class="overview-value">
-                            $312.00
+                            ${order.totalPrice}
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
                             PAYMENT METHOD:
                         </div>
                         <div class="overview-value">
-                            Cash on delivery
+                            ${paymentMethod}
                         </div>
                     </div>
                 </div>
@@ -111,64 +111,48 @@
                             <th class="table-title">Product</th>
                             <td></td>
                         </tr>
-
+						<c:forEach var="dt" items="${order.details}">
                         <tr class="prod">
                             <td>
-                                Beige knitted shoes x <span class="quantity">1</span>
+                                ${dt.prod.name } x <span class="quantity">${dt.quantity}</span>
                             </td>
 
-                            <td>$84.00</td>
+                            <td>${dt.price }</td>
                         </tr>
-
-                        <tr class="prod">
-                            <td>
-                                Beige knitted shoes x <span class="quantity">1</span>
-                            </td>
-
-                            <td>$84.00</td>
-                        </tr>
-
-                        <tr class="prod">
-                            <td>
-                                Beige knitted shoes x <span class="quantity">1</span>
-                            </td>
-
-                            <td>$84.00</td>
-                        </tr>
-
+                        </c:forEach>
                         <tr class="table-cat">
                             <td class="table-title">Subtotal:</td>
-                            <td class="table-value">$312.00</td>
+                            <td class="table-value">${order.totalPrice - shippingValue}</td>
                         </tr>
 
                         <tr class="table-cat">
                             <td class="table-title">Shipping:</td>
-                            <td class="table-value">Free shipping</td>
+                            <td class="table-value">${shippingMethod}</td>
                         </tr>
 
                         <tr class="table-cat">
                             <td class="table-title">Payment method:</td>
-                            <td class="table-value">Cash on delivery</td>
+                            <td class="table-value">${paymentMethod}</td>
                         </tr>
 
                         <tr class="table-cat">
                             <td class="table-title">Total:</td>
-                            <td class="table-value bold">$312.00</td>
+                            <td class="table-value bold">${order.totalPrice}</td>
                         </tr>
                     </table>
                 </div>
                 <div class="title" style="margin-top: 50px;">Billing Address</div>
                 <div class="order-info">
                     <ul>
-                        <li>Ho Duc Trung</li>
-                        <li>Q9 Thanh pho Thu Duc, TP.HCM</li>
-                        <li>0943394369</li>
-                        <li>hoductrung2604@gmail.com</li>
+                        <li>${acc.fullname }</li>
+                        <li>${order.cusAddress }</li>
+                        <li>${order.phone }</li>
+                        <li>${order.cusEmail}</li>
                       
                     </ul>
                 </div>
 
-                <a href="home.html" class="btn-back-home">Back To Home</a>
+                <a href="home/index.htm" class="btn-back-home">Back To Home</a>
             </div>
         </div>
     </main>

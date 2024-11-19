@@ -89,6 +89,7 @@ public class HomeController {
 			HttpSession session) throws IOException, InterruptedException  {
 		System.out.println("viewdetail1");
 		
+		
 		// Get account in http session
 		Account account = (Account) session.getAttribute("acc");
 		String username = account == null ? "" : account.getUser_name();

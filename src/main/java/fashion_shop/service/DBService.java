@@ -1,5 +1,6 @@
 package fashion_shop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -57,6 +58,15 @@ public class DBService {
 
 		return list;
 	}
+	public List<Cart> getCartItemsByUsername(String username) {		
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Cart WHERE username = :username";
+		Query query = session.createQuery(hql);
+		query.setParameter("username", username);
+		List<Cart> list = query.list();
+
+		return list;
+	}
 
 	public Cart getCartItemByPhoneAndProduct(String phone, String productId) {		
 		String fnt = "getCartItemByPhoneAndProduct: ";
@@ -70,6 +80,25 @@ public class DBService {
 			query.setParameter("phone", phone);
 			query.setParameter("productId", productId);
 			cart = (Cart) query.list().get(0);			
+		} catch (Exception e) {
+			System.err.print(fnt + e);
+			return null;
+		}
+
+		return cart;
+	}
+	public Cart getCartItemByUsernameAndProduct(String username, String productId) {		
+		String fnt = "getCartItemByUsernameAndProduct: ";
+
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Cart WHERE username = :username AND productid = :productId";		
+		Cart cart;
+
+		try {
+			Query query = session.createQuery(hql);
+			query.setParameter("username", username);
+			query.setParameter("productId", productId);
+			cart = (Cart) query.list().get(0);		
 		} catch (Exception e) {
 			System.err.print(fnt + e);
 			return null;
