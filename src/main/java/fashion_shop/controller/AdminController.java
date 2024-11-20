@@ -54,6 +54,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import fashion_shop.DAO.accountDAO;
 import fashion_shop.DAO.adminDAO;
+import fashion_shop.DAO.orderDAO;
 import fashion_shop.DAO.productDAO;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -75,6 +76,8 @@ public class AdminController {
 	@Autowired
 	productDAO productDAL;
 	
+	@Autowired
+	orderDAO orderDAL;
 	
 	
 	// HOME
@@ -403,17 +406,55 @@ public class AdminController {
 //	
 //	
 //	// Show Orders' Details
-//	@RequestMapping(value = { "adminBill" }, method = RequestMethod.GET)
-//	public String adminBill(ModelMap model) {
-////		List<Order> listOrders = getLOrder();
-////		model.addAttribute("orders", listOrders);
-//		return "admin/adminBill";
-//	}
+	@RequestMapping(value = { "adminBill" }, method = RequestMethod.GET)
+	public String adminBill(@RequestParam(value = "status", required = false) Integer status, ModelMap model) {
+	    // Gán giá trị mặc định là 0 nếu không có status
+	    if (status == null) {
+	        status = 0; // Mặc định "Chờ xác nhận"
+	    }
+	    System.out.println("status: " + status);
+
+	    // Lấy danh sách đơn hàng theo trạng thái
+	    List<Order> listOrders = orderDAL.getOrdersByStatus(status);
+	    List<String> names = new ArrayList<>();
+	    for (Order order : listOrders) {
+	        Account acc = accountDAL.getUser(order.getCusUsername());
+	        names.add(acc.getFullname());
+	    }
+
+	    model.addAttribute("orders", listOrders);
+	    System.out.println(listOrders);
+	    model.addAttribute("names", names);
+	    model.addAttribute("currentStatus", status); // Truyền trạng thái hiện tại sang view
+	    return "admin/adminBill";
+	}
+
 //	
-//	@RequestMapping(value = { "adminBillInfo" }, method = RequestMethod.GET)
-//	public String adminBillInfo(ModelMap model) {
-//		return "admin/adminBillInfo";
-//	}
+	@RequestMapping(value = { "adminBillInfo/{orderID}" }, method = RequestMethod.GET)
+	public String adminBillInfo(ModelMap model, @PathVariable("orderID") Integer orderID) {
+		Order od = orderDAL.getOrderById(orderID);
+		Account acc = accountDAL.getUser(od.getCusUsername());
+		model.addAttribute("order", od);
+		model.addAttribute("accUser", acc);
+		return "admin/adminBillInfo";
+	}
+	@RequestMapping(value = "handleOrder", method = RequestMethod.POST)
+	public String approveOrder(@RequestParam("orderId") int orderId, @RequestParam("action") String action) {
+	    Order order = orderDAL.getOrderById(orderId);
+	    
+	    if ("approve".equals(action)) {
+	        order.setStatus(1);  // Trạng thái chuẩn bị
+	    } else if ("reject".equals(action)) {
+	        order.setStatus(-1); // Trạng thái huỷ
+	    }else if ("prepare_done".equals(action)) {
+	        order.setStatus(2); // Trạng thái giao hàng
+	    } else if ("delivered".equals(action)) {
+	        order.setStatus(3); // Trạng thái hoàn thành
+	    }
+	    
+	    orderDAL.setStatusOrder(order);
+	    return "redirect:/admin/adminBillInfo/"+orderId+".htm";
+	}
 	
 
 	

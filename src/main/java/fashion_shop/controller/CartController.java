@@ -225,7 +225,7 @@ public class CartController {
 	    order.setCusEmail(account.getAddress());
 	    order.setOrder_date(new java.sql.Date(new Date().getTime()));
 	    order.setTotalPrice(totalValue);
-	    order.setStatus(-1); // Trạng thái chờ xác nhận
+	    order.setStatus(0); // Trạng thái chờ xác nhận
 
 	    // Order Detail
 	    List<OrderDetail> orderDetails = new ArrayList<>();

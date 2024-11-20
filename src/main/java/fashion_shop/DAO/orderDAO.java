@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fashion_shop.entity.Order;
+import fashion_shop.entity.Product;
 
 
 @Transactional
@@ -28,6 +29,20 @@ public class orderDAO {
 		List<Order> listOrder = query.list();
 		return listOrder;
 	}
+	public List<Order> getOrdersByStatus(Integer status){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Order WHERE status = :status";
+	    Query query = session.createQuery(hql);
+	    query.setParameter("status", status);
+	    List<Order> listOrder = query.list();
+	    return listOrder;
+	}
+	
+	public Order getOrderById(Integer orderID) {
+		Session session = factory.getCurrentSession();
+	    Order order = (Order) session.get(Order.class, orderID);
+	    return order;
+	}
 	
 	public Integer insertOrder(Order order) {
 		String fnt = "insert Order: ";
@@ -37,6 +52,26 @@ public class orderDAO {
 
 		try {
 			session.save(order);
+			t.commit();
+		} catch (Exception e) {
+			System.err.print(fnt + e);
+			t.rollback();
+			return 0;
+		} finally {
+			session.close();
+		}
+
+		return 1;
+	}
+	
+	public Integer setStatusOrder(Order order) {
+		String fnt = "Set Status Order: ";
+
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+
+		try {
+			session.update(order);
 			t.commit();
 		} catch (Exception e) {
 			System.err.print(fnt + e);
