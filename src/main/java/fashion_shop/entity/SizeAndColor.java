@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
  
 @Entity
@@ -16,6 +20,11 @@ public class SizeAndColor {
 	
 	@Column(name = "Quantity")
 	private Integer quantity;
+	
+	@ManyToOne
+	@MapsId("productId")
+	@JoinColumn(name = "ProductID", nullable = false)
+	private Product product;
 	
 	@Embeddable
 	public static class PK  implements Serializable {
@@ -28,6 +37,9 @@ public class SizeAndColor {
 		private String size;
 		@Column(name = "Color")
 		private String color;
+		
+		
+		
 		
 		public String getProductID() {
 			return productID;
@@ -52,6 +64,8 @@ public class SizeAndColor {
 		}
 		
 		
+		
+		
 	
 		
 	}
@@ -69,5 +83,13 @@ public class SizeAndColor {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 }

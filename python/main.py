@@ -168,7 +168,6 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         genderInt=X['Gender']
         clothInt=X['ProductMaterial']
         le = LabelEncoder()
-
         # https://brandirectory.com/rankings/apparel/table
         X['Brand'] = np.where(X['Brand'] == 'Nike', 10, 
         np.where(X['Brand'] == 'Louis Vuitton', 9,
@@ -203,12 +202,10 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         
         cols = X.columns
         ms = MinMaxScaler()
-
         X = ms.fit_transform(X)
         X = pd.DataFrame(X, columns=[cols])
         X = X.tail(n=len(df_history))
         X = X.mean(axis=0)
-
         # load model
         with open(current_directory+"/model.pkl", "rb") as f:
             kmeans = pickle.load(f)

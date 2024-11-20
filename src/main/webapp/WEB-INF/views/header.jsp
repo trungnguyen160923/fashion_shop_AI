@@ -71,84 +71,65 @@
 					
 					
 					<!-- Cart-Shopping  -->
-                    <li class="cart-group">
-                        <a href="cart/checkout.htm">
-                            <i class="fa-solid fa-bag-shopping"></i>
-                            <span class="prod-quantity">3</span>
-                        </a>
-                        
-                        <div class="cart">
-                            <div class="show-prods">
-                                <div class="prod">
-                                    <div class="prod-image">
-                                        <img src="https://d-themes.com/html/riode/images/demos/demo4/products/5.jpg" alt="">
-                                    </div>
+                    <li class="cart-group"> 
+					    <a href="cart/checkout.htm">
+					        <i class="fa-solid fa-bag-shopping"></i>
+					        <c:set var="totalQuantity" value="0" />
+					        <c:forEach var="cart" items="${sessionScope.carts}">
+					            <c:set var="totalQuantity" value="${totalQuantity + 1}" />
+					        </c:forEach>
+					        <c:if test="${not empty sessionScope.carts}">
+					            <span class="prod-quantity">${totalQuantity}</span>
+					        </c:if>
+					    </a>
+					    
+					    <c:choose>
+					        <c:when test="${not empty sessionScope.carts}">
+					            <div class="cart">
+					                <div class="show-prods">
+					                    <c:forEach var="cart" items="${sessionScope.carts}">
+					                        <div class="prod">
+					                            <div class="prod-image">
+					                                <img src="${cart.product.image}" alt="">
+					                            </div>
+					                            <div class="prod-info">
+					                                <div class="prod-content">
+					                                    <h3><a href="home/detail/${cart.product.idProduct }.htm" class="prod-name">${cart.product.name}</a></h3>
+					                                    <p>
+					                                        <span class="quantity">${cart.quantity}</span> 
+					                                        x 
+					                                        <span class="price">$${cart.product.price}</span>
+					                                    </p>
+					                                </div>
+					                            </div>
+					                            <div class="btn-remove">
+					                                <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+					                            </div>
+					                        </div>
+					                    </c:forEach>
+					                    
+					                </div>
+					
+					                <div class="subtotal">
+					                    <c:set var="totalPrice" value="0" />
+					                    <c:forEach var="cart" items="${sessionScope.carts}">
+					                        <c:set var="totalPrice" value="${totalPrice + (cart.product.price * cart.quantity)}" />
+					                    </c:forEach>
+					                    <label for="">Subtotal:</label>
+					                    <span class="total-price">$${totalPrice}</span>
+					                </div>
+					
+					                <div class="action">
+					                    <a href="cart/checkout.htm" class="btn-check-out">GO TO CHECK OUT</a>
+					                </div>
+					            </div>
+					        </c:when>
+					        <c:otherwise>
+					            <!-- <p>Your cart is empty.</p> -->
+					        </c:otherwise>
+					    </c:choose>
+					</li>
 
-                                    <div class="prod-info">
-                                        <div class="prod-content">
-                                            <h3 ><a href="home/detail.htm" class="prod-name">Riode White Trends</a></h3>
-                                            <p><span class="quantity">1</span> x <span class="price">$21.00</span></p>
-                                        </div>
-
-                                        
-                                    </div>
-
-                                    <div class="btn-remove">
-                                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
-                                    </div>
-                                </div>
-
-                                <div class="prod">
-                                    <div class="prod-image">
-                                        <img src="https://d-themes.com/html/riode/images/demos/demo4/products/5.jpg" alt="">
-                                    </div>
-
-                                    <div class="prod-info">
-                                        <div class="prod-content">
-                                            <h3 ><a href="" class="prod-name">Riode White Trends</a></h3>
-                                            <p><span class="quantity">1</span> x <span class="price">$21.00</span></p>
-                                        </div>
-
-                                        
-                                    </div>
-
-                                    <div class="btn-remove">
-                                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
-                                    </div>
-                                </div>
-
-                                <div class="prod">
-                                    <div class="prod-image">
-                                        <img src="https://d-themes.com/html/riode/images/demos/demo4/products/5.jpg" alt="">
-                                    </div>
-
-                                    <div class="prod-info">
-                                        <div class="prod-content">
-                                            <h3 ><a href="" class="prod-name">Riode White Trends</a></h3>
-                                            <p><span class="quantity">1</span> x <span class="price">$21.00</span></p>
-                                        </div>
-
-                                        
-                                    </div>
-
-                                    <div class="btn-remove">
-                                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="subtotal">
-                                <label for="">Subtotal:</label>
-                                <span class="total-price">$139.00</span>
-                            </div>
-
-                            <div class="action">
-                                <!-- <a class="btn-view-cart" href="viewCart.html">View Cart</a> -->
-
-                                <a href="cart/checkout.htm" class="btn-check-out">GO TO CHECK OUT</a>
-                            </div>
-                        </div>
-                    </li>
 				</ul>
 			</div>
 		</section>

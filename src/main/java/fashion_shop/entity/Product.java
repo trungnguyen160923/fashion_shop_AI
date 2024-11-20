@@ -54,6 +54,9 @@ public class Product {
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, targetEntity = Rating.class)
 	private Collection<Rating> ratings;
 	
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, targetEntity = SizeAndColor.class)
+	private Collection<SizeAndColor> sizeAndColors;
+	
 
 public Product(String idProduct, String name, float price, String image, String brand, Boolean gender,
 			Integer releaseTime, String productType, int productCluster, Collection<Cart> carts,
@@ -84,6 +87,8 @@ public Product(String idProduct, String name, float price, String image, String 
 	@ManyToOne 
 	@JoinColumn(name = "IDCategory")
 	private ProductCategory ProdCategory;
+	
+	
 
 	public String getIdProduct() {
 		return idProduct;
@@ -204,6 +209,14 @@ public Product(String idProduct, String name, float price, String image, String 
 
 	public void setRatings(Collection<Rating> ratings) {
 		this.ratings = ratings;
+	}
+	
+	public Collection<SizeAndColor> getSizeAndColors() {
+		return sizeAndColors;
+	}
+
+	public void setSizeAndColors(Collection<SizeAndColor> sizeAndColors) {
+		this.sizeAndColors = sizeAndColors;
 	}
 
 

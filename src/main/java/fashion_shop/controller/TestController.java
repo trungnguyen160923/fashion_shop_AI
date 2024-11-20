@@ -28,6 +28,15 @@ public class TestController {
 		return "test";
 	}
 	
+	@RequestMapping(value="test/checkOut", method=RequestMethod.GET)
+	public String checkOut( ModelMap model) {
+		return "cart/checkOut";
+	}
+	@RequestMapping(value="test/orderComplete", method=RequestMethod.GET)
+	public String orderComplete( ModelMap model) {
+		return "cart/orderComplete";
+	}
+	
 	@RequestMapping(value="test/form", method=RequestMethod.POST)
 	public String form(ModelMap model, @RequestParam("mess") String mess) {
 		model.addAttribute("message", "Your message is " + mess);
