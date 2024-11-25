@@ -34,16 +34,15 @@ public class accountDAO {
 		return user;
 	}
 	
-	public boolean updateUser( String username, String name, Date birthday, String phone, String address ) {
+	public boolean updateUser( String username, String name, Date birthday, String phone, String address,boolean gender) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		
 		Account acc = (Account) session.get(Account.class, username);
 		acc.setFullname(name);
 		acc.setBirthday(birthday);
 		acc.setPhone(phone);
 		acc.setAddress(address);
-		
+		acc.setGender(gender);
 		boolean flag = true;
 		try {
 			session.update(acc);
@@ -58,4 +57,5 @@ public class accountDAO {
 		
 		return flag;
 	}
+
 }

@@ -99,11 +99,11 @@
                     <label for="">Email:</label>
                     <input type="email" placeholder="Email" value= "${acc.getEmail() }" readonly>
                     
-                    <!-- <select name="" id="" reaonly>
-                        <option value="">Male</option>
-                        <option value="">Female</option>
-                        <option value="">Other</option>
-                    </select> -->
+                    <label for="gender">Gender:</label>
+		            <select name="gender" disabled>
+		                <option value="true" ${acc.gender ? 'selected' : ''}>Male</option>
+		                <option value="false" ${!acc.gender ? 'selected' : ''}>Female</option>
+		            </select>
 
 
                 </div>

@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "Account")
 public class Account {
-	@Column(name = "ID")
+	@Column(name = "ID", insertable = false, updatable = false)
 	private int ID;
 	
 	public Account() {
@@ -70,6 +70,7 @@ public class Account {
 	@Column(name = "Phone")
 	private String phone;
 
+	@Column(name = "Address")
 	private String address;
 	
 	@ManyToOne 
@@ -183,10 +184,10 @@ public class Account {
 		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [ID=" + ID + ", user_name=" + user_name + ", password=" + password + ", fullname=" + fullname
-				+ ", email=" + email + ", gender=" + gender + ", image=" + image + ", birthday=" + birthday + ", phone="
-				+ phone + ", address=" + address + ", role=" + role + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Account [ID=" + ID + ", user_name=" + user_name + ", password=" + password + ", fullname=" + fullname
+//				+ ", email=" + email + ", gender=" + gender + ", image=" + image + ", birthday=" + birthday + ", phone="
+//				+ phone + ", address=" + address + ", role=" + role + "]";
+//	}
 }
