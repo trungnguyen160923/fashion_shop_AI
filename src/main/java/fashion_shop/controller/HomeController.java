@@ -2,9 +2,11 @@ package fashion_shop.controller;
 import java.io.IOException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -19,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fashion_shop.entity.Account;
 import fashion_shop.entity.History;
+import fashion_shop.entity.Order;
 import fashion_shop.entity.Product;
 import fashion_shop.entity.ProductCategory;
 import fashion_shop.entity.SatisfyProduct;
 import fashion_shop.entity.SatisfyProductKey;
 import fashion_shop.DAO.HistoryDAO;
+import fashion_shop.DAO.orderDAO;
 import fashion_shop.DAO.productDAO;
 
 @Transactional
@@ -39,6 +43,7 @@ public class HomeController {
 	
 	@Autowired
 	HistoryDAO historyDAO;
+	
 	
 	
 	@RequestMapping("index")	
@@ -132,4 +137,6 @@ public class HomeController {
 		
 		return "home/detail";
 	}
+	
+	
 }

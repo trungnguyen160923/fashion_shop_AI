@@ -38,6 +38,16 @@ public class orderDAO {
 	    return listOrder;
 	}
 	
+	public List<Order> getOrdersByStatusAndUsername(Integer status, String username){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Order WHERE status = :status AND cusUsername = :cusUsername";
+	    Query query = session.createQuery(hql);
+	    query.setParameter("status", status);
+	    query.setParameter("cusUsername", username);
+	    List<Order> listOrder = query.list();
+	    return listOrder;
+	}
+	
 	public Order getOrderById(Integer orderID) {
 		Session session = factory.getCurrentSession();
 	    Order order = (Order) session.get(Order.class, orderID);

@@ -33,9 +33,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fashion_shop.entity.Account;
 import fashion_shop.entity.Cart;
+import fashion_shop.entity.Order;
 import fashion_shop.entity.Role;
 import fashion_shop.service.DBService;
 import fashion_shop.DAO.accountDAO;
+import fashion_shop.DAO.orderDAO;
 
 @Transactional
 @Controller
@@ -49,6 +51,9 @@ public class UserController {
 	
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	orderDAO orderDAO;
 	
 	
 	
@@ -400,5 +405,47 @@ public class UserController {
 		
 		return "redirect:/user/userHome.htm";
 	}
+	@RequestMapping("purchaseOrder")	
+	public String purchaseOrder(ModelMap model,
+			HttpServletRequest req,
+			@RequestParam(value = "status", required = false) Integer status) {
+		HttpSession s = req.getSession();
+		Account account = (Account) s.getAttribute("acc");
+		
+		if (account == null) {
+			s.setAttribute("fromPage", "home/purchaseOrder.htm");			
+			return "redirect:/user/login.htm";
+		}
+		if (status == null) {
+	        status = 0; // Mặc định "Chờ xác nhận"
+	    }
+
+	    // Lấy danh sách đơn hàng theo trạng thái
+	    List<Order> listOrders = orderDAO.getOrdersByStatusAndUsername(status, account.getUser_name());
+
+	    model.addAttribute("orders", listOrders);
+	    System.out.println(listOrders);
+	    model.addAttribute("currentStatus", status);
+		return "user/historyOrder";
+	}
 	
+	@RequestMapping(value = { "purchaseOrder/{orderID}" }, method = RequestMethod.GET)
+	public String adminBillInfo(ModelMap model, @PathVariable("orderID") Integer orderID) {
+		Order od = orderDAO.getOrderById(orderID);
+		Account acc = accountDAO.getUser(od.getCusUsername());
+		model.addAttribute("order", od);
+		model.addAttribute("accUser", acc);
+		return "user/detailHistoryOrder";
+	}
+	@RequestMapping(value = "handleOrder", method = RequestMethod.POST)
+	public String approveOrder(@RequestParam("orderId") int orderId, @RequestParam("action") String action) {
+	    Order order = orderDAO.getOrderById(orderId);
+	    
+	    if ("cancelOrder".equals(action)) {
+	        order.setStatus(-1);  // Trạng thái chuẩn bị
+	    }
+	    
+	    orderDAO.setStatusOrder(order);
+	    return "redirect:/user/purchaseOrder/.htm";
+	}
 }

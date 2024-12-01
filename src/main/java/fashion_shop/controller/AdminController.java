@@ -162,12 +162,14 @@ public class AdminController {
 	        if (productDAL.checkProductIdExists(id)) {
 	            model.addAttribute("errorMessage", "Product ID already exists.");
 	            model.addAttribute("listCats", productDAL.getLCat());
+	            System.out.println("Product ID already exists.");
 	            return "admin/adminAddProd"; // Trả về trang với thông báo lỗi
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();  // In chi tiết lỗi ra console
 	        model.addAttribute("errorMessage", "Error checking Product ID: " + e.getMessage());
 	        model.addAttribute("listCats", productDAL.getLCat());
+	        System.out.println("Error checking Product ID: " + e.getMessage());
 	        return "admin/adminAddProd";  // Trả về trang với thông báo lỗi
 	    }
 

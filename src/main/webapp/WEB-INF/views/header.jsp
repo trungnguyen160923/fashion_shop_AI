@@ -33,6 +33,7 @@
 						<li><a href="home/products.htm">Products</a></li>
 						<li><a href="">Sale</a></li>
 						<li><a href="">About</a></li>
+						<li><a href="user/purchaseOrder.htm">Purchase Order</a></li>
 						<li class="search d-flex ai-center"><input type="text"
 							placeholder="Search..."> <a href=""> <i
 								class="fa-solid fa-magnifying-glass"></i>
