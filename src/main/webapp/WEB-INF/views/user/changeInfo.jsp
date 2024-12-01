@@ -81,52 +81,76 @@
         </div>
 
         <div class="main-content">
-        	<form method="post">
-            <div class="row">
-                <div class="col-4">
-                    <div class="logo">
-                        <i class="fa-solid fa-t"></i>
-                    </div>
-                </div>
-                
-                <div class="col-4">
-                    
-                    <label for="">Username:</label>
-                    <input type="text" placeholder= "Username" name="username" value="${acc.getUser_name() }" readonly>
-                    
-                    <label for="">Full name:</label>
-                    <input type="text" placeholder="FullName" name="name" value= "${acc.getFullname() }" >
-                    
-                    <label for="">Email:</label>
-                    <input type="email" placeholder="Email" value= "${acc.getEmail() }" readonly>
-                    
-                    <!-- <select name="" id="" reaonly>
-                        <option value="">Male</option>
-                        <option value="">Female</option>
-                        <option value="">Other</option>
-                    </select> -->
-
-
-                </div>
-                
-                <div class="col-4">
-                
-                	<label for="">Birthday:</label>
-                    <input type="date" placeholder="Birthday" name="birthday" value="${acc.getBirthday() }" >
-                    
-                    <label for="">Number:</label>
-                    <input type="number" placeholder="PhoneNumber" name="phone" value= "${acc.getPhone() }" >
-                    
-                    <label for="">Address:</label>
-                    <input type="text" placeholder="Address" name="address" value= "${acc.getAddress() }" >
-                </div>
+ <form method="post">
+    <div class="row">
+        <div class="col-4">
+            <div class="logo">
+                <i class="fa-solid fa-t"></i>
             </div>
+        </div>
+
+        <div class="col-4">
+			<div>
+	            <label for="username">Username:</label>
+	            <input type="text" placeholder="Username" name="username" value="${acc.getUser_name() }" readonly>
+			</div>
 			
-			<button class="btn">Save changes</button>
-			<!-- 
-            <a href="user/changeInfor/${acc.user_name }.htm" class="btn">Change Information</a>
-			 -->
-			</form>
+            <div>
+	            <label for="name">Full name:</label>
+	            <input type="text" placeholder="FullName" name="name" value="${acc.getFullname() }">
+	                <c:if test="${not empty nameError}">
+	               		<span class="error">${nameError}</span>
+	            	</c:if>
+            </div>
+ 
+            <div>
+	            <label for="email">Email:</label>
+	            <input type="email" placeholder="Email" value="${acc.getEmail() }" readonly>
+			</div>
+			
+			<div>
+	            <label for="gender">Gender:</label>
+	            <select name="gender">
+	                <option value="true" ${acc.gender ? 'selected' : ''}>Male</option>
+	                <option value="false" ${!acc.gender ? 'selected' : ''}>Female</option>
+	            </select>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div>
+            <label for="birthday">Birthday:</label>
+            <input type="date" placeholder="Birthday" name="birthday" value="${acc.getBirthday() }">
+
+                 <c:if test="${not empty birthdayError}">
+                	<span class="error">${birthdayError}</span>
+            	 </c:if>
+            </div>
+
+
+	        <div>
+            <label for="phone">Number:</label>
+            <input type="number" placeholder="PhoneNumber" name="phone" value="${acc.getPhone() }">
+
+	            <c:if test="${not empty phoneError}">
+	                <span class="error">${phoneError}</span>
+	            </c:if>
+			</div>   
+
+            <div>
+            <label for="address">Address:</label>
+            <input type="text" placeholder="Address" name="address" value="${acc.getAddress() }">
+
+	            <c:if test="${not empty addressError}">
+	                <span class="error">${addressError}</span>
+	            </c:if>
+	        </div>
+        </div>
+    </div>
+
+    <button class="btn" type="submit">Save changes</button>
+</form>
+
 			
 		
         </div>
@@ -139,4 +163,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
     <script src="<c:url value='/resources/home/dist/js/owl.carousel.js' />"></script>
 	<script src="<c:url value='/resources/home/dist/js/home.js' />"></script>
+	<style>
+    .error {
+        color: red;
+        font-size: 1.2em;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+	
 </html>

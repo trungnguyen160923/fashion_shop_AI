@@ -1,6 +1,7 @@
 package fashion_shop.controller;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -13,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import org.apache.jasper.tagplugins.jstl.core.If;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -34,8 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 import fashion_shop.entity.Account;
 import fashion_shop.entity.Cart;
 import fashion_shop.entity.Order;
+
 import fashion_shop.entity.Role;
-import fashion_shop.service.DBService;
 import fashion_shop.DAO.accountDAO;
 import fashion_shop.DAO.orderDAO;
 
@@ -55,14 +55,12 @@ public class UserController {
 	@Autowired
 	orderDAO orderDAO;
 	
-	
-	
 	// Register GET
-	@RequestMapping(value = "register", method = RequestMethod.GET)
-	public String register(ModelMap model) {
-		model.addAttribute("user", new Account());
-		return "user/register";
-	}
+		@RequestMapping(value = "register", method = RequestMethod.GET)
+		public String register(ModelMap model) {
+			model.addAttribute("user", new Account());
+			return "user/register";
+		}
 	
 	// Register POST
 	@RequestMapping(value = "register", method = RequestMethod.POST)
@@ -99,18 +97,44 @@ public class UserController {
 				errors.rejectValue("photo", "Lỗi lưu file!");
 			}
 		}
-		
+		if (user.getBirthday() == null) {
+	        errors.rejectValue("birthday", "user", "Ngày sinh không được để trống.");
+	    } else {
+	        Calendar cal = Calendar.getInstance();
+	        cal.setTime(new Date()); 
+	        int currentYear = cal.get(Calendar.YEAR);
+
+	        cal.setTime(user.getBirthday());
+	        int birthYear = cal.get(Calendar.YEAR);
+
+	        int age = currentYear - birthYear;
+
+	        if (age < 16) {
+	            errors.rejectValue("birthday", "user", "Yêu cầu người dùng phải trên 16 tuổi.");
+	        }
+	    }
+	    
 		if (user.getPassword().trim().length() == 0) {
 			errors.rejectValue("password", "user", "Yêu cầu không để trống mật khẩu");
 		} else {
 			if (!user.getPassword().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")) {
 				errors.rejectValue("password", "user",
-						"Nhập trên 8 kí tự trong đó có chữ hoa, thường và kí tự đặc biệt.");
+						"Nhập trên 8 kí tự trong đó có chữ hoa, thường và kí tự đặc biệt.");
+			}
+		}
+		if (user.getPassword().trim().length() == 0) {
+			errors.rejectValue("password", "user", "Yêu cầu không để trống mật khẩu");
+		} else {
+			if (!user.getPassword().matches("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")) {
+				errors.rejectValue("password", "user",
+						"Nhập trên 8 kí tự trong đó có chữ hoa, thường và kí tự đặc biệt.");
 			}
 		}
 
 		if (user.getFullname().trim().length() == 0) {
-			errors.rejectValue("fullname", "user", "Yêu cầu không để trống họ tên");
+		    errors.rejectValue("fullname", "user", "Yêu cầu không để trống họ tên");
+		} else if (user.getFullname().matches(".*\\d.*")) {
+		    errors.rejectValue("fullname", "user", "Họ tên không được có chữ số");
 		}
 
 		String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
@@ -136,6 +160,9 @@ public class UserController {
 				errors.rejectValue("phone", "user", "Yêu cầu nhập đúng định dạng số điện thoại");
 		}
 		
+		if (user.getAddress().trim().length() == 0) {
+			errors.rejectValue("address", "user", "địa chỉ không được bỏ trống.");
+		}
 
 		if (passwordagain.trim().length() == 0) {
 			model.addAttribute("passwordagain", "Vui lòng không để trống mật khẩu");
@@ -145,10 +172,9 @@ public class UserController {
 			model.addAttribute("passwordagain", "Vui lòng nhập trùng với mật khẩu");
 			return "user/register";
 		}
-
 		Role r = (Role) session.get(Role.class, 2);
 		user.setrole(r);
-
+		System.out.print( user);
 		try {
 			if (errors.hasErrors()) {
 				model.addAttribute("messageRegister", "Đăng ký thất bại");
@@ -159,7 +185,10 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			t.rollback();
+			System.out.println( "////////////////");
+			System.out.print( e);
 			model.addAttribute("messageRegister", "Đăng ký thất bại!");
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -214,11 +243,6 @@ public class UserController {
 				String fromPage = (String) httpSession.getAttribute("fromPage");
 				// session để lưu user là customer và quay lại home
 				model.addAttribute("session", httpSession.getAttribute("acc"));
-				
-				DBService db = new DBService(factory);	
-				List<Cart> cartItems = db.getCartItemsByUsername(acc.getUser_name());
-				httpSession.setAttribute("carts", cartItems);
-				
 				if (fromPage == "cart") {
 					return "redirect:/cart/checkout.htm";
 				} else {					
@@ -272,7 +296,7 @@ public class UserController {
 		String newPassword = Integer.toString(rand_int1);
 		try {
 			acc.setPassword(newPassword);
-			String from = "n19dccn039@student.ptithcm.edu.vn";
+			String from = "n21dccn081@student.ptithcm.edu.vn";
 			String to = acc.getEmail();
 			String body = "Đây là mật khẩu mới của bạn: " + newPassword;
 			String subject = "Quên mật khẩu";
@@ -374,9 +398,7 @@ public class UserController {
 	public String logOut(HttpServletRequest req) {
 		HttpSession s = req.getSession();
 		s.removeAttribute("acc");
-		s.removeAttribute("fromPage");
-		s.removeAttribute("carts");
-		return "redirect:/user/login.htm";
+		return "redirect:/home/index.htm";
 	}
 	
 	//Change info
@@ -390,20 +412,77 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = { "changeInfor" }, method = RequestMethod.POST)
-	public String changeInfo(ModelMap model,
-			HttpSession session,
-			@RequestParam("username") String username,
-			@RequestParam("name") String name,
-			//@RequestParam(value="birthday") Date birthday,
-			@RequestParam("phone") String phone,
-			@RequestParam("address") String address) {
-		
-		Date birthday = new Date();
-		accountDAO.updateUser(username, name, birthday, phone, address);
-		Account acc = accountDAO.getUser(username);
-		session.setAttribute("acc", acc);
-		
-		return "redirect:/user/userHome.htm";
+	public String changeInfo(
+	        ModelMap model,
+	        @RequestParam("username") String username,
+	        @RequestParam("name") String name,
+	        @RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthday,
+	        @RequestParam("phone") String phone,
+	        @RequestParam("address") String address,
+	        @RequestParam("gender") boolean gender,
+	        HttpSession session) {
+
+	    boolean hasErrors = false;
+
+	    // Kiểm tra họ tên
+	    if (name == null || name.trim().isEmpty()) {
+	        model.addAttribute("nameError", "Họ tên không được để trống.");
+	        hasErrors = true;
+	    } else if (name.matches(".*\\d.*")) {
+	        model.addAttribute("nameError", "Họ tên không được chứa chữ số.");
+	        hasErrors = true;
+	    }
+
+	    // Kiểm tra tuổi
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(new Date());
+	    int currentYear = cal.get(Calendar.YEAR);
+
+	    cal.setTime(birthday);
+	    int birthYear = cal.get(Calendar.YEAR);
+	    int age = currentYear - birthYear;
+
+	    if (age < 16) {
+	        model.addAttribute("birthdayError", "Người dùng phải trên 16 tuổi.");
+	        hasErrors = true;
+	    }
+
+	    // Kiểm tra số điện thoại
+	    String regexNumber = "0\\d{9}";
+	    Pattern patternNumber = Pattern.compile(regexNumber);
+
+	    if (phone == null || phone.trim().isEmpty()) {
+	        model.addAttribute("phoneError", "Số điện thoại không được để trống.");
+	        hasErrors = true;
+	    } else if (!patternNumber.matcher(phone).matches()) {
+	        model.addAttribute("phoneError", "Số điện thoại không hợp lệ.");
+	        hasErrors = true;
+	    }
+
+	    // Kiểm tra địa chỉ
+	    if (address == null || address.trim().isEmpty()) {
+	        model.addAttribute("addressError", "Địa chỉ không được để trống.");
+	        hasErrors = true;
+	    }
+
+	    // Nếu có lỗi, quay lại form
+	    if (hasErrors) {
+	        model.addAttribute("username", username);
+	        model.addAttribute("name", name);
+	        model.addAttribute("birthday", birthday);
+	        model.addAttribute("phone", phone);
+	        model.addAttribute("address", address);
+	        model.addAttribute("gender", gender);
+	        return "user/changeInfo"; 
+	    }
+
+	    // Nếu không có lỗi, cập nhật thông tin
+	    accountDAO.updateUser(username, name, birthday, phone, address, gender);
+	    System.out.println(username + " " +  name + " " + birthday + " " + phone+ " " +  address+ " " + gender);
+	    Account acc = accountDAO.getUser(username);
+	    session.setAttribute("acc", acc);
+
+	    return "redirect:/user/userHome.htm";
 	}
 	@RequestMapping("purchaseOrder")	
 	public String purchaseOrder(ModelMap model,
