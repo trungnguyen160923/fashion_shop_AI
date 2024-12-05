@@ -34,10 +34,14 @@
 						<li><a href="">Sale</a></li>
 						<li><a href="">About</a></li>
 						<li><a href="user/purchaseOrder.htm">Purchase Order</a></li>
-						<li class="search d-flex ai-center"><input type="text"
-							placeholder="Search..."> <a href=""> <i
-								class="fa-solid fa-magnifying-glass"></i>
-						</a></li>
+						<li class="search d-flex ai-center">
+						<form action="search.htm" method="get">
+        <input type="text" name="query" placeholder="Search..." value="${param.query}">
+        <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+						</li>
 					</ul>
 				</div>
 

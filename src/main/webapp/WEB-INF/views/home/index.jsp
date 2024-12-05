@@ -46,7 +46,7 @@
 						<div class="col-item">
 							<div class="img">
 								<img
-									src="https://d-themes.com/html/riode/images/demos/demo4/slides/1.jpg"
+									src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fvi%2Fb%25E1%25BB%25A9c-%25E1%25BA%25A3nh%2Fch%25C3%25ACa-kh%25C3%25B3a&psig=AOvVaw1Jn5AmpjGEpksMV-Gfwgel&ust=1733451447759000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjr0f_Hj4oDFQAAAAAdAAAAABAQ"
 									alt="">
 
 							</div>

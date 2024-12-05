@@ -109,6 +109,26 @@ public class HomeController {
 		model.addAttribute("relatedProducts", relatedProduct);
 		return "home/detail";
 	}
+	
+	 // Phương thức tìm kiếm sản phẩm
+		@RequestMapping(value = "search", method = RequestMethod.GET)
+		public String searchProducts(@RequestParam("query") String query, ModelMap model) {
+		    // Kiểm tra xem query có giá trị không
+		    System.out.println("Search query: " + query); // Debug thông qua console
+		    
+		    // Gọi phương thức tìm kiếm từ DAO
+		    List<Product> searchResults = productDAL.searchProducts(query);
+		    
+		    // Kiểm tra số lượng sản phẩm tìm thấy
+		    System.out.println("Number of products found: " + searchResults.size());
+		    
+		    // Truyền kết quả vào model
+		    model.addAttribute("products", searchResults); 
+		    model.addAttribute("query", query);  // Thêm từ khóa tìm kiếm vào model để hiển thị lại trong giao diện
+		    
+		    // Trả về trang sản phẩm
+		    return "home/search";
+		}
 
 	@RequestMapping(value = { "detail/{idProduct}" },
 			method = RequestMethod.GET, 

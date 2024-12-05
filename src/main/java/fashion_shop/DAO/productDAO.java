@@ -122,6 +122,23 @@ public class productDAO {
 		return listProd;
 	}
 	
+	public List<Product> searchProducts(String keyword) {
+	    // Mở phiên làm việc Hibernate
+	    Session session = factory.getCurrentSession();
+	    
+	    // Sử dụng HQL để tìm kiếm sản phẩm theo tên. Chú ý sử dụng LIKE để tìm kiếm theo mẫu
+	    String hql = "FROM Product P WHERE P.name LIKE :keyword";
+	    
+	    // Tạo truy vấn và thiết lập tham số "keyword"
+	    Query query = session.createQuery(hql);
+	    
+	    query.setParameter("keyword", "%" + keyword + "%");  // Tìm kiếm với phần từ khóa (tức là tìm tất cả các sản phẩm có tên chứa "keyword")
+	    
+	    // Thực hiện truy vấn và trả về danh sách sản phẩm
+	    List<Product> productList = query.list();
+	    
+	    return productList;
+	}
 	
 	
 	public List<ProductCategory> getLCat() {
