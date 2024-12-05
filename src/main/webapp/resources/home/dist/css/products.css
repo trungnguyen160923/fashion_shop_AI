@@ -742,7 +742,7 @@ header .header-support.active {
 
 .main .banner {
 	height: 250px;
-	background: url("https://d-themes.com/html/riode/images/demos/demo4/page-header.jpg") center center/cover;
+	background: url("https://png.pngtree.com/background/20230612/original/pngtree-vintage-photo-frames-wallpaper-photo-3-picture-image_3183628.jpg") center center/cover;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -762,7 +762,7 @@ header .header-support.active {
 	font-size: 40px;
 	font-weight: 600;
 	line-height: 45px;
-	color: white;
+	color: Black;
 	text-align: center;
 }
 
@@ -771,12 +771,12 @@ header .header-support.active {
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 1.5;
-	color: #F2F3F5;
+	color:Black;
 	text-align: center;
 }
 
 .main .banner a {
-	color: #F2F3F5;
+	color: Black;
 }
 
 .main .banner a:hover {

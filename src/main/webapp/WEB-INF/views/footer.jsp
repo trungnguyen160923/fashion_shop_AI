@@ -12,11 +12,11 @@
 								<h3 class="title">GET TO KNOW US</h3>
 
 								<ul>
-									<li>About Riode</li>
+									<li>About HardMode</li>
 									<li>Careers</li>
 									<li>Affiliate Program</li>
 									<li>Show Hosts</li>
-									<li>Riode Cares</li>
+									<li>HardMode Cares</li>
 									<li>Submit Your Product</li>
 								</ul>
 							</div>
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 
-		<div class="footer-bottom">Riode eCommerce © 2022. All Rights
+		<div class="footer-bottom">HardMode eCommerce © 2022. All Rights
 			Reserved</div>
 	</footer>
 </body>

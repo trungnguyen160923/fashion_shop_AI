@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riode - Show products</title>
+    <title>HardMode - Show products</title>
     <base href="${pageContext.servletContext.contextPath}/">
 
 	<link rel="icon" type="image/png"
@@ -30,8 +30,8 @@
     <!-- Main -->
     <main class="main">
         <section class="banner">
-            <h1>RIODE SHOP</h1>
-            <p><a href="home/index.htm"><i class="fa-solid fa-house"></i></a> / Riode Shop</p>
+            <h1>HardMode</h1>
+            <p><a href="home/index.htm"><i class="fa-solid fa-house"></i></a> / HardMode</p>
         </section>
 
         <div class="container">

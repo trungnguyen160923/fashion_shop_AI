@@ -10,9 +10,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png"
-	href="https://d-themes.com/html/riode/images/icons/favicon.png">
-<title>Riode</title>
+<title>HardMode</title>
 <base href="${pageContext.servletContext.contextPath}/">
 
 <link href="<c:url value='/resources/home/dist/css/reset.css' />"
@@ -46,7 +44,7 @@
 						<div class="col-item">
 							<div class="img">
 								<img
-									src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fvi%2Fb%25E1%25BB%25A9c-%25E1%25BA%25A3nh%2Fch%25C3%25ACa-kh%25C3%25B3a&psig=AOvVaw1Jn5AmpjGEpksMV-Gfwgel&ust=1733451447759000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjr0f_Hj4oDFQAAAAAdAAAAABAQ"
+									src="https://i.pinimg.com/236x/58/80/4d/58804dab17f3425416a8894351c8f2e3.jpg"
 									alt="">
 
 							</div>
@@ -88,12 +86,12 @@
 							<a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/1.jpg"
+										src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fHJ1bm5pbmd8ZW58MHx8MHx8fDA%3D"
 										alt="">
 
 								</div>
 
-								<h5 class="title">For Fitness</h5>
+									<h5 class="title" style="color: lightyellow;">For Fitness</h5>
 							</a> <a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
@@ -106,21 +104,21 @@
 							</a> <a href="home/products/WATCHES.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/3.jpg"
+										src="https://sc04.alicdn.com/kf/H54c0b5b77c8047fdb5f1402941ad7a05k/230335687/H54c0b5b77c8047fdb5f1402941ad7a05k.jpg"
 										alt="">
 
 								</div>
 
-								<h5 class="title white">Top watches</h5>
+								<h5 class="title white "style="color: Black">Top watches</h5>
 							</a> <a href="home/products/SHOES.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/4.jpg"
+										src="https://product.hstatic.net/1000308345/product/img_7469_5de48ff7060f49f7949adbf37f0729f4_master.jpg"
 										alt="">
 
 								</div>
 
-								<h5 class="title white">Sneakers</h5>
+								<h5 class="title white" style="color: navy">Sneakers</h5>
 							</a>
 						</div>
 					</div>

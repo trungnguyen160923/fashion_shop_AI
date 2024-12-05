@@ -6,7 +6,7 @@
 		<section class="header-top">
 			<div class="container d-flex jc-space-between ai-center">
 				<div class="header-left">
-					<p>Welcome to Riode store message or remove it!</p>
+					<p>Welcome to HardMode store message or remove it!</p>
 				</div>
 
 				<div class="header-right">
@@ -24,7 +24,7 @@
 				<div class="header-left  d-flex jc-space-between ai-center">
 					<div class="logo">
 						<a href="home/index.htm"><img
-							src="https://d-themes.com/html/riode/images/demos/demo4/logo.png"
+							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAbIXMWqGU_HT9XebFegSh4ZTYBpv-HNt7ww&s 	 	"
 							alt=""></a>
 					</div>
 
@@ -36,11 +36,11 @@
 						<li><a href="user/purchaseOrder.htm">Purchase Order</a></li>
 						<li class="search d-flex ai-center">
 						<form action="search.htm" method="get">
-        <input type="text" name="query" placeholder="Search..." value="${param.query}">
-        <button type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-    </form>
+					        <input type="text" name="query" placeholder="Search..." value="${param.query}">
+					        <button type="submit">
+					            <i class="fa-solid fa-magnifying-glass"></i>
+					        </button>
+					    </form>
 						</li>
 					</ul>
 				</div>

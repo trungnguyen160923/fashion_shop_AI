@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png"
 	href="https://d-themes.com/html/riode/images/icons/favicon.png">
-<title>Riode</title>
+<title>HardMode</title>
 <base href="${pageContext.servletContext.contextPath}/">
 
 <link href="<c:url value='/resources/home/dist/css/reset.css' />"
@@ -46,7 +46,7 @@
 						<div class="col-item">
 							<div class="img">
 								<img
-									src="https://d-themes.com/html/riode/images/demos/demo4/slides/1.jpg"
+									src="https://i.pinimg.com/236x/58/80/4d/58804dab17f3425416a8894351c8f2e3.jpg"
 									alt="">
 
 							</div>
@@ -88,12 +88,12 @@
 							<a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/1.jpg"
+										src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fHJ1bm5pbmd8ZW58MHx8MHx8fDA%3D"
 										alt="">
 
 								</div>
-
-								<h5 class="title">For Fitness</h5>
+s
+								<h5 class="title" style="color: lightyellow;">For Fitness</h5>
 							</a> <a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
@@ -106,21 +106,21 @@
 							</a> <a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/3.jpg"
+										src=https://sc04.alicdn.com/kf/H54c0b5b77c8047fdb5f1402941ad7a05k/230335687/H54c0b5b77c8047fdb5f1402941ad7a05k.jpg
 										alt="">
 
 								</div>
 
-								<h5 class="title white">Top watches</h5>
+								<h5 class="title white" style="color: Yellow">Top watches</h5>
 							</a> <a href="home/products.htm" class="col-6 h-1">
 								<div class="img">
 									<img
-										src="https://d-themes.com/html/riode/images/demos/demo4/categories/4.jpg"
+										src="https://product.hstatic.net/1000308345/product/img_7469_5de48ff7060f49f7949adbf37f0729f4_master.jpg"
 										alt="">
 
 								</div>
 
-								<h5 class="title white">Sneakers</h5>
+								<h5 class="title" style="color: navy">Sneakers</h5>
 							</a>
 						</div>
 					</div>
