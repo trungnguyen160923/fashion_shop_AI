@@ -118,17 +118,16 @@ def cluster():
         # print(df[df.columns[0]].count())
         # updating_cluster="UPDATE Product SET ProductCluster=1 where Product.ID<10"
         with engine.connect() as connection:
-            for i in range(df[df.columns[0]].count()):
-                # Chuẩn bị câu lệnh SQL dưới dạng đối tượng `text`
-                update_statement = text(
-                    'UPDATE Product SET ProductCluster = :cluster WHERE Product.ID = :product_id'
-                )
-                # Chuyển đổi các giá trị từ numpy.int32 sang int
-                cluster_value = int(cluster_list[i])
-                product_id_value = int(list_ID[i])
+            with connection.begin():  # Tạo một transaction
+                for i in range(df[df.columns[0]].count()):
+                    update_statement = text(
+                        'UPDATE Product SET ProductCluster = :cluster WHERE ID = :product_id'
+                    )
+                    cluster_value = int(cluster_list[i])
+                    product_id_value = int(list_ID[i])
 
-                # Thực thi câu lệnh với các tham số
-                connection.execute(update_statement, {"cluster": cluster_value, "product_id": product_id_value})
+                    connection.execute(update_statement, {"cluster": cluster_value, "product_id": product_id_value})
+
 
         return {"code": 200, "message": "success"}
     except Exception as e:

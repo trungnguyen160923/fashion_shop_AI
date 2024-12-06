@@ -111,15 +111,19 @@ def cluster():
             {"cluster": int(cluster), "product_id": int(product_id)}
             for cluster, product_id in zip(cluster_list, list_ID)
         ]
-        print(update_data)
+
         with engine.connect() as connection:
             print("Running update statement...")
-            update_statement = text("""
-                UPDATE Product SET ProductCluster =:cluster WHERE Product.ID =:product_id
-            """)
-            for data in update_data:
-                print(data)
-                connection.execute(update_statement, {"cluster": data["cluster"], "product_id": data["product_id"]})
+
+            # Tạo transaction
+            with connection.begin():
+                update_statement = text("""
+                    UPDATE Product SET ProductCluster = :cluster WHERE Product.ID = :product_id
+                """)
+
+                # Lặp qua dữ liệu và thực thi lệnh
+                for data in update_data:
+                    connection.execute(update_statement, {"cluster": data["cluster"], "product_id": data["product_id"]})
 
         return {"code": 200, "message": "Clustering completed successfully"}
     except Exception as e:
