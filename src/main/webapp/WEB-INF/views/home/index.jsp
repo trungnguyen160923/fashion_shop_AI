@@ -109,7 +109,7 @@
 
 								</div>
 
-								<h5 class="title white "style="color: Black">Top watches</h5>
+								<h5 class="title white "style="color: Yellow">Top watches</h5>
 							</a> <a href="home/products/SHOES.htm" class="col-6 h-1">
 								<div class="img">
 									<img

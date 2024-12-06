@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riode - Show products</title>
+    <title>Hardmode - Show products</title>
     <base href="${pageContext.servletContext.contextPath}/">
 
 	<link rel="icon" type="image/png"
@@ -61,38 +61,6 @@ pageEncoding="UTF-8"%>
 		  font-weight: 600;
 		}
 		
-		button {
-		  padding: 13.5px 60px;
-		  border: 0;
-		  border-radius: 100px;
-		  background-color: #2ba8fb;
-		  color: #ffffff;
-		  font-size: 15px;
-		  font-weight: Bold;
-		  transition: all 0.5s;
-		  -webkit-transition: all 0.5s;
-		}
-		
-		button:hover {
-		  background-color: #6fc5ff;
-		  box-shadow: 0 0 20px #6fc5ff50;
-		  transform: scale(1.1);
-		}
-		
-		button:active {
-		  background-color: #3d94cf;
-		  transition: all 0.25s;
-		  -webkit-transition: all 0.25s;
-		  box-shadow: none;
-		  transform: scale(0.98);
-		}
-		button:disabled {
-		    background-color: #cccccc; /* Màu xám */
-		    color: #666666; /* Màu chữ xám nhạt */
-		    cursor: not-allowed; /* Hiển thị con trỏ không được phép */
-		    box-shadow: none; /* Bỏ hiệu ứng bóng */
-		    transform: none; /* Không thay đổi kích thước */
-		}
 		.mt{
 			margin-top: 30px;
 		}
