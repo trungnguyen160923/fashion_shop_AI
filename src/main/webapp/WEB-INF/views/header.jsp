@@ -24,7 +24,7 @@
 				<div class="header-left  d-flex jc-space-between ai-center">
 					<div class="logo">
 						<a href="home/index.htm"><img
-							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAbIXMWqGU_HT9XebFegSh4ZTYBpv-HNt7ww&s 	 	"
+							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAbIXMWqGU_HT9XebFegSh4ZTYBpv-HNt7ww&s"
 							alt=""></a>
 					</div>
 

@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riode - Forgot Password</title>
+<title>HardMode - Forgot Password</title>
 <base href="${pageContext.servletContext.contextPath}/">
 
 <link href="<c:url value='/resources/home/dist/css/reset.css' />" rel="stylesheet">
@@ -31,13 +31,13 @@
 	rel="stylesheet">
 </head>
 <body>
-
-	<!-- Header -->
+        <%@include file="/WEB-INF/views/header.jsp"%> 
+<%-- 	<!-- Header -->
 	<header class="header">
 		<section class="header-top">
 			<div class="container d-flex jc-space-between ai-center">
 				<div class="header-left">
-					<p>Welcome to Riode store message or remove it!</p>
+					<p>Welcome to HardMode store message or remove it!</p>
 				</div>
 
 				<div class="header-right">
@@ -81,7 +81,7 @@
 
 		<div class="header-support"></div>
 
-	</header>
+	</header> --%>
 
 	<main class="main login-container">
 		<div class="container">
@@ -99,7 +99,7 @@
 	</main>
 
 
-
+   <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 
 <script

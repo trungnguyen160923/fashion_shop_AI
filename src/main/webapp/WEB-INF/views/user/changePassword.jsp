@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="https://d-themes.com/html/riode/images/icons/favicon.png">
-    <title>Riode - Changing Password</title>
+    <title>HardMode - Changing Password</title>
     <base href="${pageContext.servletContext.contextPath}/">
 
     <link href="<c:url value='/resources/home/dist/css/reset.css' />" rel="stylesheet">
