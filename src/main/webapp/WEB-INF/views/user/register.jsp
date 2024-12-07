@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riode - Register</title>
+<title>HardMode - Register</title>
 <base href="${pageContext.servletContext.contextPath}/">
 
 <link href="<c:url value='/resources/home/dist/css/reset.css' />"
@@ -99,6 +99,7 @@
 			</form:form>
 		</div>
 	</main>
+	         <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
