@@ -1006,6 +1006,9 @@ header .header-support.active {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             z-index: 10;
         }
+        .mr{
+        	margin-right: 20px;
+        }
     </style>
 </head>
 
@@ -1073,7 +1076,7 @@ header .header-support.active {
                         </div>
                     </aside>
 
-                    <section class="main-content col-9">
+                    <section class="container main-content col-9">
                         <div class="main-header">
                             <h2>Search Results for: "${query}"</h2>
                         </div>
@@ -1081,7 +1084,11 @@ header .header-support.active {
                         <div class="list-products">
                             <div class="row">
                                 <c:if test="${empty products}">
-                                    <p>No products found for your search.</p>
+                                <div class = "row">
+                               		<h3 style="color:red" class = "mr">No products found for your search.</h3>
+                               		<a href="home/index.htm">=> Go back to home!</a>
+                                </div> 
+                                    
                                 </c:if>
 
                                 <c:if test="${not empty products}">
@@ -1115,7 +1122,7 @@ header .header-support.active {
                             </div>
                         </div>
 
-                        <div class="tool-box">
+                        <!-- <div class="tool-box">
                             <p class="showing-products">Showing 12 of 56 Products</p>
                             <div class="pagination">
                                 <div class="page-item"><a class="disable" href=""><i class="fa-solid fa-arrow-left"></i> Prev</a></div>
@@ -1125,7 +1132,7 @@ header .header-support.active {
                                 <div class="page-item"><a href="">6</a></div>
                                 <div class="page-item"><a href="">Next <i class="fa-solid fa-arrow-right"></i></a></div>
                             </div>
-                        </div>
+                        </div> -->
                     </section>
                 </div>
             </section>

@@ -31,6 +31,7 @@
 		  border: none;
 		  cursor: pointer;
 		  transition: 400ms;
+		  font-size: 15px;
 		}
 		.btnRed{
 			background-color: red;
@@ -142,6 +143,42 @@
 		    display: flex;
 		    justify-content: flex-end; /* Đẩy các nút sang phải */
 		}
+		/* From Uiverse.io by andrew-demchenk0 */ 
+	.rating:not(:checked) > input {
+	  position: absolute;
+	  appearance: none;
+	}
+	
+	.rating:not(:checked) > label {
+	  float: right;
+	  cursor: pointer;
+	  font-size: 30px;
+	  color: #666;
+	}
+	
+	.rating:not(:checked) > label:before {
+	  content: '★';
+	}
+	
+	.rating > input:checked + label:hover,
+	.rating > input:checked + label:hover ~ label,
+	.rating > input:checked ~ label:hover,
+	.rating > input:checked ~ label:hover ~ label,
+	.rating > label:hover ~ input:checked ~ label {
+	  color: #e58e09;
+	}
+	
+	.rating:not(:checked) > label:hover,
+	.rating:not(:checked) > label:hover ~ label {
+	  color: #ff9e0b;
+	}
+	
+	.rating > input:checked ~ label {
+	  color: #ffa723;
+	}
+
+
+
 		
 	
 	</style>
@@ -180,6 +217,17 @@
 				                </div>
 				            </form>
 				        </c:when>
+				        <c:when test="${order.status == 3}">
+				            <!-- Trạng thái 3: Đơn hàng đang chờ đánh giá -->
+				            <form action="user/rating.htm" method="POST">
+				                <input type="hidden" name="orderId" value="${order.id_order}" />
+				                <div class="row justify-end">
+				                    <button class="button" type="submit" name="action" value="cancelOrder">
+				                        <p class="text">Rate Product</p>
+				                    </button>
+				                </div>
+				            </form>
+				        </c:when>
 				    </c:choose>
 				</div>
 
@@ -206,6 +254,7 @@
                 <label for="">Total Price</label>
                 <p class="value">$${order.totalPrice }</p>
             </div>
+           
         </div>
 
         <!-- Main talbe data  -->
@@ -217,6 +266,7 @@
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <td>Rating</td>
                     </tr>
     
                     <div class="scroll"></div>
@@ -226,6 +276,20 @@
                             <td>${dt.prod.name }</td>
                             <td>$${dt.prod.price}</td>
                             <td>${dt.quantity}</td>
+                            <td>
+                            	 <div class="rating">
+									  <input value="5" name="rate" id="star5" type="radio">
+									  <label title="text" for="star5"></label>
+									  <input value="4" name="rate" id="star4" type="radio">
+									  <label title="text" for="star4"></label>
+									  <input value="3" name="rate" id="star3" type="radio">
+									  <label title="text" for="star3"></label>
+									  <input value="2" name="rate" id="star2" type="radio">
+									  <label title="text" for="star2"></label>
+									  <input value="1" name="rate" id="star1" type="radio">
+									  <label title="text" for="star1"></label>
+								</div>
+                            </td>
                         </tr>
                         </c:forEach>
                     </div>

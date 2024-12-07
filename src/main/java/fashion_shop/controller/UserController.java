@@ -36,6 +36,7 @@ import fashion_shop.entity.Cart;
 import fashion_shop.entity.Order;
 
 import fashion_shop.entity.Role;
+import fashion_shop.service.DBService;
 import fashion_shop.DAO.accountDAO;
 import fashion_shop.DAO.orderDAO;
 
@@ -210,7 +211,9 @@ public class UserController {
 			BindingResult errors) throws InterruptedException {
 		Account temp = new Account();
 		Account acc = new Account();
+		DBService db = new DBService(factory);
 		List<Account> listUser = accountDAO.getLUser();
+		
 		for (int i = 0; i < listUser.size(); i++) {
 			if (listUser.get(i).getUser_name().equals(user.getUser_name())) {
 				acc = new Account();
@@ -240,7 +243,10 @@ public class UserController {
 			if (isAdmin == true) {
 				return "redirect:/admin/adminHome.htm";
 			} else {
+				List<Cart> cartItems = db.getCartItemsByUsername(acc.getUser_name());
 				String fromPage = (String) httpSession.getAttribute("fromPage");
+				System.out.println(cartItems);
+				httpSession.setAttribute("carts", cartItems);
 				// session để lưu user là customer và quay lại home
 				model.addAttribute("session", httpSession.getAttribute("acc"));
 				if (fromPage == "cart") {
@@ -398,6 +404,7 @@ public class UserController {
 	public String logOut(HttpServletRequest req) {
 		HttpSession s = req.getSession();
 		s.removeAttribute("acc");
+		s.removeAttribute("carts");
 		return "redirect:/home/index.htm";
 	}
 	
@@ -523,8 +530,6 @@ public class UserController {
 	    if ("cancelOrder".equals(action)) {
 	        order.setStatus(-1);  // Trạng thái chuẩn bị
 	    }
-	    
-	    orderDAO.setStatusOrder(order);
-	    return "redirect:/user/purchaseOrder/.htm";
+	    return "redirect:/user/purchaseOrder.htm";
 	}
 }
