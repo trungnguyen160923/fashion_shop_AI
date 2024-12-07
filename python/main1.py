@@ -1,3 +1,4 @@
+from sklearn.metrics import silhouette_score
 from sqlalchemy import create_engine, text
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.cluster import KMeans
@@ -101,6 +102,10 @@ def cluster():
         kmeans = KMeans(n_clusters=optimal_k, random_state=42)
         cluster_list = kmeans.fit_predict(processed_data)
 
+        # Tính Silhouette Score
+        silhouette = silhouette_score(processed_data, cluster_list)
+        print(f"Silhouette Score: {silhouette}")
+
         # Lưu mô hình
         current_directory = os.getcwd()
         with open(os.path.join(current_directory, "model.pkl"), "wb") as f:
@@ -125,7 +130,7 @@ def cluster():
                 for data in update_data:
                     connection.execute(update_statement, {"cluster": data["cluster"], "product_id": data["product_id"]})
 
-        return {"code": 200, "message": "Clustering completed successfully"}
+        return {"code": 200, "message": "Clustering completed successfully", "silhouette_score": silhouette}
     except Exception as e:
         print(f"Error in /cluster: {e}")
         return {"code": 500, "message": f"Failed: {str(e)}"}
@@ -166,6 +171,8 @@ def get_history_cluster(session_id: str):
         # Chuyển đổi thành DataFrame với tên cột
         feature_names = processed_data.columns  # Tên cột từ dữ liệu đã xử lý
         input_data = pd.DataFrame([history_mean.tolist()], columns=feature_names)
+
+        print(kmeans.predict(input_data))
 
         # Dự đoán cluster
         cluster_id = kmeans.predict(input_data)[0]

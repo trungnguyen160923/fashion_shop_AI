@@ -1,4 +1,4 @@
 SERVER = 'LAPTOP-R2RR00PM'
 DATABASE = 'Fashion_Shop'
 USERNAME = 'sa'
-PASSWORD =  'sa'
+PASSWORD =  '123456'
